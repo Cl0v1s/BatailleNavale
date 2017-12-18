@@ -10,8 +10,7 @@ namespace BatailleNavale
     {
         static void Main(string[] args)
         {
-            int[,] positionbateau = new int[1, 1];
-            positionbateau[0, 0] =(4);
+            int[,] positionbateau = new int[,] { { 0, 0, 0, 3 }, { 3, 4, 6, 4 }, { 2, 6, 5, 6 }, {9,9,9,9} };
             int[,] grille1 = new int[10, 10];
             Grille.AfficherGrille(grille1);
             Grille.remplirgrille(grille1, positionbateau);

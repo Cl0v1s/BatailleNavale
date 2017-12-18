@@ -49,14 +49,37 @@ namespace BatailleNavale
         public static void remplirgrille(int[,]grille,int [,]positionbateau)
         {
            
-            for (int j = 0; j < Bateau.NombreTypesBateaux; j++)
+            for (int j = 0; j < (Bateau.NombreTypesBateaux-1); j++)
             {
                     int x1 = positionbateau[j, 0];
                     int y1 = positionbateau[j, 1];
                     int x2 = positionbateau[j, 2];
                     int y2 = positionbateau[j, 3];
-
+                    if (x1==x2)
+                    {
+                        for (int i=y1; i<=y2;i++)
+                        {
+                            grille[x1, i] = 1;
+                        }
+                    }
+                    if(y1==y2)
+                    {
+                        
+                        for (int i=x1; i<=x2;i++)
+                        {
+                            grille[i, y1] = 1;
+                        }
+                    }
             }
+            for (int i=0;i<10;i++)
+            {
+                for (int j=0;j<10;j++)
+                {
+                    Console.Write(grille[i, j]);
+                }
+                Console.WriteLine(" ");
+            }
+
 
         }
 
