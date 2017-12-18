@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
-    class Program
+    class Grille
     {
-        static void Main(string[] args)
+        public static void AfficherGrille(int[][] grille)
         {
-           Grille.AfficherGrille
+
         }
     }
 }
