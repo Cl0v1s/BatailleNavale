@@ -8,6 +8,11 @@ namespace BatailleNavale
 {
     class Grille
     {
+
+        public const int LargeurGrille = 10;
+        public const int HauteurGrille = 10;
+
+
         public static void AfficherGrille(int[,] grille)
         {
             Console.WriteLine("     A  B  C  D  E  F  G  H  I  J");

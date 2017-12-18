@@ -9,6 +9,40 @@ namespace BatailleNavale
     class Joueur
     {
 
+        public static void DemanderPosition(out int x, out int y)
+        {
+            Console.WriteLine("Veuillez entrer une position");
+            x = -1;
+            do
+            {
+                Console.Write("X:");
+                try
+                {
+                    x = Convert.ToInt32(Console.ReadLine());
+                }
+                catch
+                {
+                    x = -1;
+                }
+            }
+            while (x == -1);
+            Console.WriteLine("");
+            y = -1;
+            do
+            {
+                Console.Write("Y:");
+                try
+                {
+                    y = Convert.ToInt32(Console.ReadLine());
+                }
+                catch
+                {
+                    y = -1;
+                }
+            }
+            while (y == -1);
+        }
+
         public static int ObtenirAutreJoueur(int joueur)
         {
             if (joueur == 1)

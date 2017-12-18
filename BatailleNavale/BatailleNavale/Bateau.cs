@@ -10,8 +10,8 @@ namespace BatailleNavale
     {
         public enum ALIGNEMENT
         {
-            LIGNE = 1,
-            COLONNE = 2
+            LIGNE = 0,
+            COLONNE = 1
         }
 
         public const int NombreTypesBateaux = 5;
@@ -39,7 +39,55 @@ namespace BatailleNavale
         public static int[,] PositionBateauxJ2 = new int[Bateau.NombreTypesBateaux, 4];
         public static int[] VieBateauxJ2 = new int[Bateau.NombreTypesBateaux];
 
-        public static void PlacerBateau(int joueur, Bateau.TYPES type, int x, int y, Bateau.ALIGNEMENT alignement)
+        public static void PlacerBateauxAuHasard(int joueur)
+        {
+            Random rnd = new Random();
+            Bateau.ALIGNEMENT alignement = ALIGNEMENT.COLONNE;
+            int x = 0;
+            int y = 0;
+            int x1 = 0;
+            int y1 = 0;
+            for(int i = 0; i < Bateau.NombreTypesBateaux; i++)
+            {
+                alignement = (Bateau.ALIGNEMENT)rnd.Next(0, 2);
+                x = rnd.Next(0, Grille.LargeurGrille);
+                y = rnd.Next(0, Grille.HauteurGrille);
+
+                if (alignement == Bateau.ALIGNEMENT.LIGNE)
+                {
+                    if (x + Bateau.LongueurBateaux[i] > Grille.LargeurGrille)
+                        x = x - Bateau.LongueurBateaux[i];
+                    y1 = y;
+                    x1 = x + Bateau.LongueurBateaux[i];
+                }
+                if (alignement == Bateau.ALIGNEMENT.COLONNE && x + Bateau.LongueurBateaux[i] > Grille.HauteurGrille)
+                    y = y - Bateau.LongueurBateaux[i];
+
+                for(int j = 0; j < i; j++)
+                {
+
+                }
+            }
+        }
+
+        public static bool VerifierColisionBateaux(int joueur, Bateau.TYPES type1, Bateau.TYPES type2)
+        {
+            int[,] positionBateaux = null;
+            if (joueur == 1)
+            {
+                positionBateaux = Bateau.PositionBateauxJ1;
+            }
+            else if (joueur == 2)
+            {
+                positionBateaux = Bateau.PositionBateauxJ2;
+            }
+            
+            //TODO: faire ce truc
+
+            return false;
+        }
+
+        public static bool PlacerBateau(int joueur, Bateau.TYPES type, int x, int y, Bateau.ALIGNEMENT alignement)
         {
             int[,] positionBateaux = null;
             int[] vieBateaux = null;
@@ -56,7 +104,7 @@ namespace BatailleNavale
                 vieBateaux = Bateau.VieBateauxJ2;
             }
 
-            //TODO: vérifier que le bateau rentre dans la grille
+            //TODO: vérifier que le bateau rentre dans la grille return false sinon
             if (alignement == ALIGNEMENT.LIGNE)
             {
                 x1 = x + Bateau.LongueurBateaux[(int)type];
@@ -73,6 +121,7 @@ namespace BatailleNavale
             positionBateaux[(int)type,1] = y;
             positionBateaux[(int)type, 2] = x1;
             positionBateaux[(int)type, 3] = y1;
+            return true;
         }
 
         public static void ToucherBateau(int joueur, Bateau.TYPES type)
@@ -87,6 +136,8 @@ namespace BatailleNavale
                 vieBateaux = Bateau.VieBateauxJ2;
             }
             vieBateaux[(int)type] = vieBateaux[(int)type] - 1;
+            if (vieBateaux[(int)type] <= 0)
+                Console.WriteLine("Un bateau a été coulé.");
         }
 
         public static bool Tirer(int joueur, int x, int y)
