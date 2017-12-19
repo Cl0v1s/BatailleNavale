@@ -38,7 +38,7 @@ namespace BatailleNavale
                     Console.Write(grille[i, j]);
                     if (j != 9)
                     {
-                        Console.Write("  ");
+                        Console.Write(" |");
                     }
                 }
                 Console.WriteLine(" |");
@@ -59,7 +59,7 @@ namespace BatailleNavale
                     {
                         for (int i=y1; i<=y2;i++)
                         {
-                            grille[x1, i] = 1;
+                            grille[x1, i] = j;
                         }
                     }
                     if(y1==y2)
@@ -67,18 +67,12 @@ namespace BatailleNavale
                         
                         for (int i=x1; i<=x2;i++)
                         {
-                            grille[i, y1] = 1;
+                            grille[i, y1] = j;
                         }
                     }
+            
             }
-            for (int i=0;i<10;i++)
-            {
-                for (int j=0;j<10;j++)
-                {
-                    Console.Write(grille[i, j]);
-                }
-                Console.WriteLine(" ");
-            }
+            AfficherGrille(grille); 
 
 
         }
