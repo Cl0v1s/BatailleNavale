@@ -57,6 +57,20 @@ namespace BatailleNavale
             throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
         }
 
+        /// <summary>
+        /// Retourne la grille du joueur passé en paramètre
+        /// </summary>
+        /// <param name="joueur">Joueur dont la grille doit être retournée</param>
+        /// <returns>La grille du joueur passé en paramètre</returns>
+        public static int[,] ObtenirGrilleDecouverteJoueur(int joueur)
+        {
+            if (joueur == 1)
+                return Grille.GrilleDecouverteJ1;
+            else if (joueur == 2)
+                return Grille.GrilleDecouverteJ2;
+            throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
+        }
+
 
         /// <summary>
         /// Affiche la grille passée en paramètre
@@ -129,7 +143,7 @@ namespace BatailleNavale
             {
                 for (int i = y1; i <= y2; i++)
                 {
-                    grille[x1, i] = j;
+                    grille[x1, i] = (int)Grille.Cases.PLEIN;
                 }
             }
             if (y1 == y2)
@@ -137,7 +151,7 @@ namespace BatailleNavale
 
                 for (int i = x1; i <= x2; i++)
                 {
-                    grille[i, y1] = j;
+                    grille[i, y1] = (int)Grille.Cases.PLEIN;
                 }
             }
         }

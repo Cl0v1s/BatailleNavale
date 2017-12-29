@@ -10,10 +10,12 @@ namespace BatailleNavale
     {
         static void Main(string[] args)
         {
-            int[,] positionbateau = new int[,] { { 0, 0, 0, 3 }, { 3, 4, 6, 4 }, { 2, 6, 5, 6 }, {9,9,9,9} };
+            Bateau.PositionBateauxJ1[0, 0] = 1;
+            Sauvegarde.Charger();
+            /*int[,] positionbateau = new int[,] { { 0, 0, 0, 3 }, { 3, 4, 6, 4 }, { 2, 6, 5, 6 }, {9,9,9,9} };
             int[,] grille1 = new int[10, 10];
-            Grille.remplirgrille(grille1, positionbateau);
-            Console.ReadKey();
+            Grille.mettreaJourGrillePlusieursBateaux(grille1, positionbateau);
+            Console.ReadKey();*/
         }
     }
 }
