@@ -17,7 +17,8 @@ namespace BatailleNavale
             VIDE = 0,
             PLEIN = 1,
             TOUCHE = 2,
-            COULE = 3
+            COULE = 3, 
+            DECOUVERT_VIDE = 4
         };
 
         public const int LargeurGrille = 10;
