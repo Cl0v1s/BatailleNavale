@@ -100,7 +100,7 @@ namespace BatailleNavale
                 {
                     if(grille[i, j] == (int)Grille.Cases.PLEIN)
                         Console.Write("B");
-                    else if (grille[i, j] == (int)Grille.Cases.VIDE)
+                    else if (grille[i, j] == (int)Grille.Cases.VIDE || grille[i, j] == (int)Grille.Cases.DECOUVERT_VIDE)
                         Console.Write(" ");
                     else if (grille[i, j] == (int)Grille.Cases.TOUCHE)
                         Console.Write("O");
