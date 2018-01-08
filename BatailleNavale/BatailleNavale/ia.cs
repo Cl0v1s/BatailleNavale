@@ -24,7 +24,7 @@ namespace BatailleNavale
                 PositionIANormal(joueur, out x, out y);
         }
 
-        public static void PositionIAFacile(int joueur, out int x, out int y)
+        private static void PositionIAFacile(int joueur, out int x, out int y)
         {
             do
             {
@@ -69,7 +69,7 @@ namespace BatailleNavale
             while (positionValide == false);
         }
 
-        public static void PositionIANormal(int joueur, out int x, out int y)
+        private static void PositionIANormal(int joueur, out int x, out int y)
         {
             x = 0; y = 0;
             if(IA.DerniersTirsX.Length <= 0 || IA.Combo <= 0 || IA.Combo > 5)
