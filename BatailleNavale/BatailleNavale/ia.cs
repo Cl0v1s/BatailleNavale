@@ -15,8 +15,6 @@ namespace BatailleNavale
         private static int Direction = 0;
         private static int Combo = 0;
 
-
-
         public static void PositionIA(int joueur, out int x, out int y)
         {
             x = 0; y = 0;
@@ -116,7 +114,5 @@ namespace BatailleNavale
 
 
         }
-
-       
     }
 }
