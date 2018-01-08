@@ -98,10 +98,12 @@ namespace BatailleNavale
                 }
                 for (int j = 0; j < 10; j++)
                 {
-                    if(grille[i, j] == (int)Grille.Cases.PLEIN)
+                    if (grille[i, j] == (int)Grille.Cases.PLEIN)
                         Console.Write("B");
-                    else if (grille[i, j] == (int)Grille.Cases.VIDE || grille[i, j] == (int)Grille.Cases.DECOUVERT_VIDE)
+                    else if (grille[i, j] == (int)Grille.Cases.VIDE)
                         Console.Write(" ");
+                    else if (grille[i, j] == (int)Grille.Cases.DECOUVERT_VIDE)
+                        Console.Write("X");
                     else if (grille[i, j] == (int)Grille.Cases.TOUCHE)
                         Console.Write("O");
                     if (j != 9)
