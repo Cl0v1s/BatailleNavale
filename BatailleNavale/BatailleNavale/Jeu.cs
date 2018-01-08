@@ -22,7 +22,7 @@ namespace BatailleNavale
         {
             Console.Clear();
             Console.WriteLine("======= Bataille Navale =======");
-            Console.WriteLine("Version 1.0 dévelopée par Hugo LeTarnec et Clovis Portron");
+            Console.WriteLine("Version 1.0 dévelopée par Hugo Le Tarnec et Clovis Portron");
             ConsoleKey key;
             do
             {
@@ -134,6 +134,17 @@ namespace BatailleNavale
             while(true)
             {
                 Joueur.Jouer(1);
+                Joueur.ObtenirAutreJoueur(1);
+                Joueur.Jouer(2);
+                Joueur.ObtenirAutreJoueur(2);
+                if (Joueur.DemanderContinuer()==false)
+                {
+                    Sauvegarde.Sauvegarder();
+                    Jeu.Quitter();
+                }
+
+                
+
             }
         }
 
