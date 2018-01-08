@@ -126,7 +126,24 @@ namespace BatailleNavale
 
         public static void JouerIA(int joueur)
         {
-
+            int x, y;
+            IA.PositionIA(joueur, out x, out y);
+            Console.WriteLine("Il tire sur la cellule [" + x + ", " + y + "] ...");
+            int[,] decouverte;
+            if (Bateau.Tirer(joueur, x, y) == true) // IA a touché
+            {
+                decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
+                decouverte[x, y] = (int)Grille.Cases.TOUCHE;
+                int[,] grille_autre = Grille.ObtenirGrilleJoueur(Joueur.ObtenirAutreJoueur(joueur));
+                grille_autre[x, y] = (int)Grille.Cases.TOUCHE;
+                Console.WriteLine("Il a touché un navire !");
+            }
+            else // IA n'a pas touché 
+            {
+                Console.WriteLine("C'est un coup dans l'eau...");
+                decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
+                decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;
+            }
         }
     }
 }
