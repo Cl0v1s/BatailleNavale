@@ -17,6 +17,7 @@ namespace BatailleNavale
         {
             Console.WriteLine("Veuillez entrer une position (Exemple --> C7) ");
             x = -1;
+            y = -1;
             do
             {
                 Console.WriteLine();
@@ -24,9 +25,18 @@ namespace BatailleNavale
                 {
                     string value = Console.ReadLine();
                     string lettre = value.Substring(0, 1);
-                    for 
+                    string[] Letters = new string[]
+                    {
+                        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
+                    };
+                    y = 0;
+                    while (Letters[y]!=lettre)
+                    {
+                        y++;
+                    }
+                    
                     string chiffre = value.Replace(lettre, "");
-                    y = Convert.ToInt32(chiffre);
+                    x = (Convert.ToInt32(chiffre)-1);
 
 
                 }
@@ -35,7 +45,7 @@ namespace BatailleNavale
                     x = -1;
                 }
             }
-            while (x == -1 || x<0 || x>9);
+            while ((x<0 || x>9)&(y<0||y>9));
 
         }
 
