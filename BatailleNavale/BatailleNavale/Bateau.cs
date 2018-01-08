@@ -102,20 +102,26 @@ namespace BatailleNavale
                 int essais = 0;
                 do
                 {
-                    essais++;
                     alignement = (Bateau.ALIGNEMENT)rnd.Next(0, 2);
                     x = rnd.Next(0, Grille.LargeurGrille);
                     y = rnd.Next(0, Grille.HauteurGrille);
 
                     if (alignement == Bateau.ALIGNEMENT.LIGNE)
                     {
-                        if (x + Bateau.LongueurBateaux[i] > Grille.LargeurGrille)
-                            x = x - Bateau.LongueurBateaux[i];
-                        y1 = y;
+                        if (x + Bateau.LongueurBateaux[i] >= Grille.LargeurGrille)
+                            x = x - (Grille.LargeurGrille - Bateau.LongueurBateaux[i]);
                         x1 = x + Bateau.LongueurBateaux[i];
+                        y1 = y;
                     }
-                    if (alignement == Bateau.ALIGNEMENT.COLONNE && x + Bateau.LongueurBateaux[i] > Grille.HauteurGrille)
-                        y = y - Bateau.LongueurBateaux[i];
+                    if (alignement == Bateau.ALIGNEMENT.COLONNE)
+                    {
+                        if(y + Bateau.LongueurBateaux[i] >= Grille.HauteurGrille)
+                            y = y - (Grille.LargeurGrille - Bateau.LongueurBateaux[i]);
+                        y1 = y + Bateau.LongueurBateaux[i];
+                        x1 = x;
+                    }
+                    essais++;
+
                 }
                 while (Bateau.VerifierColisionBateaux(joueur, x, y, x1, y1, (Bateau.TYPES)i) == false && essais < 200);
                 if (essais >= 200)
@@ -137,11 +143,10 @@ namespace BatailleNavale
         public static bool VerifierColisionBateaux(int joueur, int x1, int y1, int x2, int y2, Bateau.TYPES type)
         {
             int[,] grille = Grille.ObtenirGrilleJoueur(joueur);
-            int[,] positionBateaux = Bateau.ObtenirPositionBateauxJoueur(joueur);
             for (int o = 0; o < Bateau.LongueurBateaux[(int)type]; o++)
             {
                 // Si le bateau est aligné en colonne
-                if (Bateau.ObtenirAlignementBateau(joueur, type) == ALIGNEMENT.COLONNE)
+                if (x1 == x2)
                 {
                     if (grille[x1, y1 + o] != (int)Grille.Cases.VIDE)
                         return false;
@@ -191,6 +196,8 @@ namespace BatailleNavale
             positionBateaux[(int)type,1] = y;
             positionBateaux[(int)type, 2] = x1;
             positionBateaux[(int)type, 3] = y1;
+
+            Grille.mettreaJourGrilleUnBateau(Grille.ObtenirGrilleJoueur(joueur), x, y, x1, y1);
         }
 
 

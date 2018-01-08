@@ -98,8 +98,12 @@ namespace BatailleNavale
                 }
                 for (int j = 0; j < 10; j++)
                 {
-                    //TODO: afficher les caractères correspondants aux états
-                    Console.Write(grille[i, j]);
+                    if(grille[i, j] == (int)Grille.Cases.PLEIN)
+                        Console.Write("B");
+                    else if (grille[i, j] == (int)Grille.Cases.VIDE)
+                        Console.Write(" ");
+                    else if (grille[i, j] == (int)Grille.Cases.TOUCHE)
+                        Console.Write("O");
                     if (j != 9)
                     {
                         Console.Write(" |");
@@ -119,7 +123,7 @@ namespace BatailleNavale
         public static void mettreaJourGrillePlusieursBateaux(int[,]grille,int [,]positionbateaux)
         {
            
-            for (int j = 0; j < (Bateau.NombreTypesBateaux-1); j++)
+            for (int j = 0; j < (Bateau.NombreTypesBateaux); j++)
             {
                 int x1 = positionbateaux[j,0];
                 int y1 = positionbateaux[j,1];
@@ -142,7 +146,7 @@ namespace BatailleNavale
 
             if (x1 == x2)
             {
-                for (int i = y1; i <= y2; i++)
+                for (int i = y1; i < y2; i++)
                 {
                     grille[x1, i] = (int)Grille.Cases.PLEIN;
                 }
@@ -150,7 +154,7 @@ namespace BatailleNavale
             if (y1 == y2)
             {
 
-                for (int i = x1; i <= x2; i++)
+                for (int i = x1; i < x2; i++)
                 {
                     grille[i, y1] = (int)Grille.Cases.PLEIN;
                 }
