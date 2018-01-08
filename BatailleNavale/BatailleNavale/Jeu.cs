@@ -69,7 +69,23 @@ namespace BatailleNavale
 
         public static void ChargerPartie()
         {
-
+            Console.Clear();
+            Console.WriteLine("======= Charger une partie =======");
+            try
+            {
+                Sauvegarde.Charger();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Impossible de charger la partie. Etes-vous sûr d'avoir un fichier de sauvegarde existant ?");
+                Console.WriteLine("Appuyez sur une touche pour continuer...");
+                Console.ReadKey(false);
+                Jeu.MenuPrincipal();
+            }
+            Console.WriteLine("La partie a été chargée !");
+            Console.WriteLine("Appuyez sur une touche pour continuer...");
+            Console.ReadKey(false);
+            Jeu.DeroulementPartie();
         }
 
         public static void DemarrerNouvellePartie()
