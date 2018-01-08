@@ -100,7 +100,8 @@ namespace BatailleNavale
             DemanderPosition(1,out x,out y);
             Console.WriteLine("Tire sur la cellule ["+(x+1)+", "+(y+1)+"] ...");
             int[,] decouverte;
-            if (Bateau.Tirer(joueur, x, y) == true) // le joueur a touché
+            bool coule = false;
+            if (Bateau.Tirer(joueur, x, y, out coule) == true) // le joueur a touché
             {
                 decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
                 decouverte[x, y] = (int)Grille.Cases.TOUCHE;
@@ -122,13 +123,17 @@ namespace BatailleNavale
             IA.PositionIA(joueur, out x, out y);
             Console.WriteLine("Il tire sur la cellule [" + (x+1) + ", " + (y+1) + "] ...");
             int[,] decouverte;
-            if (Bateau.Tirer(joueur, x, y) == true) // IA a touché
+            bool coule = false;
+            if (Bateau.Tirer(joueur, x, y, out coule) == true) // IA a touché
             {
                 decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
                 decouverte[x, y] = (int)Grille.Cases.TOUCHE;
                 int[,] grille_autre = Grille.ObtenirGrilleJoueur(Joueur.ObtenirAutreJoueur(joueur));
                 grille_autre[x, y] = (int)Grille.Cases.TOUCHE;
                 Console.WriteLine("Il a touché un navire !");
+                IA.SignalerTouche();
+                if (coule)
+                    IA.SignalerCoule();
             }
             else // IA n'a pas touché 
             {

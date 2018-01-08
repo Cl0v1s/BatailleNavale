@@ -209,7 +209,8 @@ namespace BatailleNavale
         /// <param name="type">Type de bateau dont on doit modifier la vie </param>
         /// <param name="x">Position x à la quelle le bateau a été touché</param>
         /// <param name="y">Position y à laquelle le bateau a été touché</param>
-        public static void ToucherBateau(int joueur, Bateau.TYPES type, int x, int y)
+        /// <returns>Vrai si le bateau est coulé, Faux sinon</returns>
+        public static bool ToucherBateau(int joueur, Bateau.TYPES type, int x, int y)
         {
             int[,] positionbateau = Bateau.ObtenirPositionBateauxJoueur(joueur);
             int[] vieBateaux = Bateau.ObtenirVieBateauxJoueur(joueur);
@@ -227,11 +228,14 @@ namespace BatailleNavale
                         grille[positionbateau[(int)type, 0]+o, positionbateau[(int)type, 1]] = (int)Grille.Cases.COULE;
                 }
                 Console.WriteLine("Un bateau a été coulé.");
+                return true;
             }
+            return false;
         }
 
-        public static bool Tirer(int joueur, int x, int y)
+        public static bool Tirer(int joueur, int x, int y, out bool coule)
         {
+            coule = false;
             int[,] positionBateaux = null;
             int[] vieBateaux = null;
             if (joueur == 1)
@@ -279,7 +283,7 @@ namespace BatailleNavale
             }
 
             if (trouve == true)
-                Bateau.ToucherBateau(Joueur.ObtenirAutreJoueur(joueur), (Bateau.TYPES)(i - 1), x , y);
+                coule = Bateau.ToucherBateau(Joueur.ObtenirAutreJoueur(joueur), (Bateau.TYPES)(i - 1), x , y);
             return trouve;
 
         }
