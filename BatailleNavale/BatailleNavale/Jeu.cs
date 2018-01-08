@@ -117,7 +117,7 @@ namespace BatailleNavale
         {
             while(true)
             {
-
+                Joueur.Jouer(1);
             }
         }
 

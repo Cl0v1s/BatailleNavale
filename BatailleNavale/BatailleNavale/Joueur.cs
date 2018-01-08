@@ -13,7 +13,7 @@ namespace BatailleNavale
         /// </summary>
         /// <param name="x">Après exécution, contient la position X entrée par l'utilisateur</param>
         /// <param name="y">Après exécution, contient la position Y entrée par l'utilisateur</param>
-        public static void DemanderPosition(out int x, out int y)
+        public static void DemanderPosition(int joueur, out int x, out int y)
         {
             Console.WriteLine("Veuillez entrer une position");
             x = -1;
@@ -105,7 +105,7 @@ namespace BatailleNavale
             Grille.AfficherGrille(Grille.ObtenirGrilleJoueur(joueur));
             Console.WriteLine("Ce que vous savez de la Grille de l'adversaire:");
             Grille.AfficherGrille(Grille.ObtenirGrilleDecouverteJoueur(joueur));
-            DemanderPosition(out x,out y);
+            DemanderPosition(1,out x,out y);
             Console.WriteLine("Tire sur la cellule ["+x+", "+y+"] ...");
             int[,] decouverte;
             if (Bateau.Tirer(joueur, x, y) == true) // le joueur a touché
@@ -127,7 +127,7 @@ namespace BatailleNavale
         public static void JouerIA(int joueur)
         {
             int x, y;
-            IA.PositionIA(joueur, out x, out y);
+            IA.PositionIAN0(joueur, out x, out y);
             Console.WriteLine("Il tire sur la cellule [" + x + ", " + y + "] ...");
             int[,] decouverte;
             if (Bateau.Tirer(joueur, x, y) == true) // IA a touché
