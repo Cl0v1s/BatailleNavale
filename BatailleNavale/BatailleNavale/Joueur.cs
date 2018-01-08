@@ -15,36 +15,28 @@ namespace BatailleNavale
         /// <param name="y">Après exécution, contient la position Y entrée par l'utilisateur</param>
         public static void DemanderPosition(int joueur, out int x, out int y)
         {
-            Console.WriteLine("Veuillez entrer une position");
+            Console.WriteLine("Veuillez entrer une position (Exemple --> C7) ");
             x = -1;
             do
             {
-                Console.Write("X:");
+                Console.WriteLine();
                 try
                 {
-                    x = Convert.ToInt32(Console.ReadLine());
+                    string value = Console.ReadLine();
+                    string lettre = value.Substring(0, 1);
+                    for 
+                    string chiffre = value.Replace(lettre, "");
+                    y = Convert.ToInt32(chiffre);
+
+
                 }
                 catch
                 {
                     x = -1;
                 }
             }
-            while (x == -1);
-            Console.WriteLine("");
-            y = -1;
-            do
-            {
-                Console.Write("Y:");
-                try
-                {
-                    y = Convert.ToInt32(Console.ReadLine());
-                }
-                catch
-                {
-                    y = -1;
-                }
-            }
-            while (y == -1);
+            while (x == -1 || x<0 || x>9);
+
         }
 
         /// <summary>
@@ -106,7 +98,7 @@ namespace BatailleNavale
             Console.WriteLine("Ce que vous savez de la Grille de l'adversaire:");
             Grille.AfficherGrille(Grille.ObtenirGrilleDecouverteJoueur(joueur));
             DemanderPosition(1,out x,out y);
-            Console.WriteLine("Tire sur la cellule ["+x+", "+y+"] ...");
+            Console.WriteLine("Tire sur la cellule ["+(x+1)+", "+(y+1)+"] ...");
             int[,] decouverte;
             bool coule = false;
             if (Bateau.Tirer(joueur, x, y, out coule) == true) // le joueur a touché
@@ -128,8 +120,8 @@ namespace BatailleNavale
         public static void JouerIA(int joueur)
         {
             int x, y;
-            IA.PositionIAN0(joueur, out x, out y);
-            Console.WriteLine("Il tire sur la cellule [" + x + ", " + y + "] ...");
+            IA.PositionIA(joueur, out x, out y);
+            Console.WriteLine("Il tire sur la cellule [" + (x+1) + ", " + (y+1) + "] ...");
             int[,] decouverte;
             bool coule = false;
             if (Bateau.Tirer(joueur, x, y, out coule) == true) // IA a touché
