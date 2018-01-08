@@ -106,6 +106,8 @@ namespace BatailleNavale
                         Console.Write("X");
                     else if (grille[i, j] == (int)Grille.Cases.TOUCHE)
                         Console.Write("O");
+                    else if (grille[i, j] == (int)Grille.Cases.COULE)
+                        Console.Write("0");
                     if (j != 9)
                     {
                         Console.Write(" |");
