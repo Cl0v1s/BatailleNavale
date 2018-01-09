@@ -218,8 +218,8 @@ namespace BatailleNavale
             grille[x, y] = (int)Grille.Cases.TOUCHE;
             int[,] decouverte = Grille.ObtenirGrilleDecouverteJoueur(Joueur.ObtenirAutreJoueur(joueur));
             decouverte[x, y] = (int)Grille.Cases.TOUCHE;
-            //vieBateaux[(int)type] = vieBateaux[(int)type] - 1;
-            vieBateaux[(int)type] = 0;
+            vieBateaux[(int)type] = vieBateaux[(int)type] - 1;
+            //vieBateaux[(int)type] = 0;
 
             if (vieBateaux[(int)type] <= 0)
             {
@@ -237,7 +237,6 @@ namespace BatailleNavale
                         decouverte[positionbateau[(int)type, 0] + o, positionbateau[(int)type, 1]] = (int)Grille.Cases.COULE;
                     }
                 }
-                Console.WriteLine("Un bateau a été coulé.");
                 return true;
             }
             return false;

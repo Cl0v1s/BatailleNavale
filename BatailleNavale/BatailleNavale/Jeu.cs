@@ -134,18 +134,19 @@ namespace BatailleNavale
             int joueur = 1;
             while(true)
             {
+                Console.Clear();
                 Joueur.Jouer(joueur);
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
+                Console.WriteLine("-- Appuyez sur une touche pour passer au tour de l'autre joueur --");
+                Console.ReadKey(false);
+                Console.Clear();
                 Joueur.Jouer(joueur);
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
-                if (Joueur.DemanderContinuer()==false)
+                if (Joueur.DemanderContinuer() == false)
                 {
                     Sauvegarde.Sauvegarder();
                     Jeu.Quitter();
                 }
-
-                
-
             }
         }
 

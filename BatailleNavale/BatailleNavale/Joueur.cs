@@ -8,6 +8,30 @@ namespace BatailleNavale
 {
     class Joueur
     {
+
+        public static int TailleSalveJ1 = Bateau.NombreTypesBateaux;
+        public static int TailleSalveJ2 = Bateau.NombreTypesBateaux;
+
+        public static int ObtenirTailleSalve(int joueur)
+        {
+            if (joueur == 1)
+                return TailleSalveJ1;
+            else if (joueur == 2)
+                return TailleSalveJ2;
+            throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
+        }
+
+        public static void ReglerTailleSalve(int joueur, int valeur)
+        {
+            if (joueur == 1)
+                TailleSalveJ1 = valeur;
+            else if (joueur == 2)
+                TailleSalveJ2 = valeur;
+            else 
+                throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
+        }
+
+
         /// <summary>
         /// Demande une position à l'utilisateur
         /// </summary>
@@ -24,12 +48,9 @@ namespace BatailleNavale
                 {
                     string value = Console.ReadLine();
                     string lettre = value.Substring(0, 1);
-                    string[] Letters = new string[]
-                    {
-                        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
-                    };
+                    
                     y = 0;
-                    while (Letters[y].ToUpper()!=lettre.ToUpper())
+                    while (Grille.Lettres[y].ToUpper()!=lettre.ToUpper())
                     {
                         y++;
                     }
@@ -37,14 +58,14 @@ namespace BatailleNavale
                     string chiffre = value.Replace(lettre, "");
                     x = (Convert.ToInt32(chiffre)-1);
 
-
                 }
                 catch
                 {
                     x = -1;
+                    y = -1;
                 }
             }
-            while ((x<0 || x>9)&(y<0||y>9));
+            while ((x<0 || x>9) || (y<0||y>9));
 
         }
 
@@ -102,53 +123,77 @@ namespace BatailleNavale
         public static void JouerHumain(int joueur)
         {
             int x, y;
+            int[,] salves = new int[Joueur.ObtenirTailleSalve(joueur),2];
             Console.WriteLine("Votre Grille:");
             Grille.AfficherGrille(Grille.ObtenirGrilleJoueur(joueur));
             Console.WriteLine("Ce que vous savez de la Grille de l'adversaire:");
             Grille.AfficherGrille(Grille.ObtenirGrilleDecouverteJoueur(joueur));
-#if DEBUG
-            Console.WriteLine("la Grille de l'adversaire:");
-            Grille.AfficherGrille(Grille.ObtenirGrilleJoueur(2));
-#endif
-            DemanderPosition(1,out x,out y);
-            Console.WriteLine("Tire sur la cellule ["+(x+1)+", "+(y+1)+"] ...");
-            int[,] decouverte;
-            bool coule = false;
-            if (Bateau.Tirer(joueur, x, y, out coule) == true) // le joueur a touché
+            for (int i = 0; i < salves.GetLength(0); i++)
             {
-                
-                if(coule == false)
-                    Console.WriteLine("Vous avez touché un navire !");
+                Console.WriteLine("------------------------");
+                Console.WriteLine("Paramétrage du canon " + (i + 1) + "/" + salves.GetLength(0));
+                DemanderPosition(joueur, out x, out y);
+                salves[i, 0] = x;
+                salves[i, 1] = y;
+                Console.WriteLine("Un canon a été dirigé vers la cellule " + Grille.Lettres[y] + "" + (x + 1) + " ...");
             }
-            else // le joueur n'a pas touché 
+            Console.Clear();
+            Console.WriteLine("------------------------");
+            Console.WriteLine("Mise à feu des canons...");
+            for (int i = 0; i < salves.GetLength(0); i++)
             {
-                Console.WriteLine("C'est un coup dans l'eau...");
+                x = salves[i, 0];
+                y = salves[i, 1];
+                Console.Write("Tir sur la cellule " + Grille.Lettres[y] + "" + (x + 1) + " ...");
+                bool coule = false;
+                if (Bateau.Tirer(joueur, x, y, out coule) == true) // le joueur a touché
+                {
+                    if (coule == false)
+                        Console.WriteLine("Vous avez touché un navire !");
+                    else
+                    {
+                        Console.WriteLine("Un bateau a été coulé.");
+                        Joueur.ReglerTailleSalve(joueur, Joueur.ObtenirTailleSalve(joueur) - 1);
+                    }
+                }
+                else // le joueur n'a pas touché 
+                {
+                    Console.WriteLine("C'est un coup dans l'eau...");
+                }
             }
         }
 
         public static void JouerIA(int joueur)
         {
             int x, y;
-            IA.PositionIA(joueur, out x, out y);
-            Console.WriteLine("Il tire sur la cellule [" + (x+1) + ", " + (y+1) + "] ...");
-            int[,] decouverte;
-            bool coule = false;
-            if (Bateau.Tirer(joueur, x, y, out coule) == true) // IA a touché
+            int taillesalve = Joueur.ObtenirTailleSalve(joueur);
+            for (int i = 0; i < taillesalve ; i++)
             {
-                decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
-                decouverte[x, y] = (int)Grille.Cases.TOUCHE;
-                int[,] grille_autre = Grille.ObtenirGrilleJoueur(Joueur.ObtenirAutreJoueur(joueur));
-                grille_autre[x, y] = (int)Grille.Cases.TOUCHE;
-                Console.WriteLine("Il a touché un navire !");
-                IA.SignalerTouche();
-                if (coule)
-                    IA.SignalerCoule();
-            }
-            else // IA n'a pas touché 
-            {
-                Console.WriteLine("C'est un coup dans l'eau...");
-                decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
-                decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;
+                IA.PositionIA(joueur, out x, out y);
+                Console.Write("L'ordinateur tire sur la cellule " + Grille.Lettres[y] + "" + (x + 1) + " ...");
+                int[,] decouverte;
+                bool coule = false;
+                if (Bateau.Tirer(joueur, x, y, out coule) == true) // IA a touché
+                {
+                    decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
+                    decouverte[x, y] = (int)Grille.Cases.TOUCHE;
+                    int[,] grille_autre = Grille.ObtenirGrilleJoueur(Joueur.ObtenirAutreJoueur(joueur));
+                    grille_autre[x, y] = (int)Grille.Cases.TOUCHE;
+                    Console.WriteLine("L'ordinateur a touché un navire !");
+                    IA.SignalerTouche();
+                    if (coule)
+                    {
+                        Console.WriteLine("L'ordinateur a coulé un navire !");
+                        IA.SignalerCoule();
+                        Joueur.ReglerTailleSalve(joueur, Joueur.ObtenirTailleSalve(joueur) - 1);
+                    }
+                }
+                else // IA n'a pas touché 
+                {
+                    Console.WriteLine("C'est un coup dans l'eau...");
+                    decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
+                    decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;
+                }
             }
         }
     }

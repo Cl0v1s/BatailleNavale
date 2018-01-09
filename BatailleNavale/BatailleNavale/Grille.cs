@@ -21,7 +21,7 @@ namespace BatailleNavale
             DECOUVERT_VIDE = 4
         };
 
-        public string[] Letters = new string[]
+        public static string[] Lettres = new string[]
         {
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
         };
