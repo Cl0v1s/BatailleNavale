@@ -155,7 +155,7 @@ namespace BatailleNavale
 
             if (x1 == x2)
             {
-                for (int i = y1; i < y2; i++)
+                for (int i = y1; i <= y2; i++)
                 {
                     grille[x1, i] = (int)Grille.Cases.PLEIN;
                 }
@@ -163,7 +163,7 @@ namespace BatailleNavale
             if (y1 == y2)
             {
 
-                for (int i = x1; i < x2; i++)
+                for (int i = x1; i <= x2; i++)
                 {
                     grille[i, y1] = (int)Grille.Cases.PLEIN;
                 }

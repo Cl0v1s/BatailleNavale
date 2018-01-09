@@ -131,12 +131,13 @@ namespace BatailleNavale
 
         public static void DeroulementPartie()
         {
+            int joueur = 1;
             while(true)
             {
-                Joueur.Jouer(1);
-                Joueur.ObtenirAutreJoueur(1);
-                Joueur.Jouer(2);
-                Joueur.ObtenirAutreJoueur(2);
+                Joueur.Jouer(joueur);
+                joueur = Joueur.ObtenirAutreJoueur(joueur);
+                Joueur.Jouer(joueur);
+                joueur = Joueur.ObtenirAutreJoueur(joueur);
                 if (Joueur.DemanderContinuer()==false)
                 {
                     Sauvegarde.Sauvegarder();

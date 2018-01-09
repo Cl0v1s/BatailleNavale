@@ -15,12 +15,11 @@ namespace BatailleNavale
         /// <param name="y">Après exécution, contient la position Y entrée par l'utilisateur</param>
         public static void DemanderPosition(int joueur, out int x, out int y)
         {
-            Console.WriteLine("Veuillez entrer une position (Exemple --> C7) ");
             x = -1;
             y = -1;
             do
             {
-                Console.WriteLine();
+                Console.WriteLine("Veuillez entrer une position valide (Exemple --> C7) ");
                 try
                 {
                     string value = Console.ReadLine();
@@ -30,7 +29,7 @@ namespace BatailleNavale
                         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
                     };
                     y = 0;
-                    while (Letters[y]!=lettre)
+                    while (Letters[y].ToUpper()!=lettre.ToUpper())
                     {
                         y++;
                     }
@@ -107,23 +106,23 @@ namespace BatailleNavale
             Grille.AfficherGrille(Grille.ObtenirGrilleJoueur(joueur));
             Console.WriteLine("Ce que vous savez de la Grille de l'adversaire:");
             Grille.AfficherGrille(Grille.ObtenirGrilleDecouverteJoueur(joueur));
+#if DEBUG
+            Console.WriteLine("la Grille de l'adversaire:");
+            Grille.AfficherGrille(Grille.ObtenirGrilleJoueur(2));
+#endif
             DemanderPosition(1,out x,out y);
             Console.WriteLine("Tire sur la cellule ["+(x+1)+", "+(y+1)+"] ...");
             int[,] decouverte;
             bool coule = false;
             if (Bateau.Tirer(joueur, x, y, out coule) == true) // le joueur a touché
             {
-                decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
-                decouverte[x, y] = (int)Grille.Cases.TOUCHE;
-                int[,] grille_autre = Grille.ObtenirGrilleJoueur(Joueur.ObtenirAutreJoueur(joueur));
-                grille_autre[x, y] = (int)Grille.Cases.TOUCHE;
-                Console.WriteLine("Vous avez touché un navire !");
+                
+                if(coule == false)
+                    Console.WriteLine("Vous avez touché un navire !");
             }
             else // le joueur n'a pas touché 
             {
                 Console.WriteLine("C'est un coup dans l'eau...");
-                decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
-                decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;
             }
         }
 

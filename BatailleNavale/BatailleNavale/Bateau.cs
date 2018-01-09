@@ -179,12 +179,12 @@ namespace BatailleNavale
 
             if (alignement == ALIGNEMENT.LIGNE)
             {
-                x1 = x + Bateau.LongueurBateaux[(int)type];
+                x1 = x + Bateau.LongueurBateaux[(int)type] - 1;
                 y1 = y;
             }
             else
             {
-                y1 = y + Bateau.LongueurBateaux[(int)type];
+                y1 = y + Bateau.LongueurBateaux[(int)type] - 1;
                 x1 = x;
             }
 
@@ -216,16 +216,26 @@ namespace BatailleNavale
             int[] vieBateaux = Bateau.ObtenirVieBateauxJoueur(joueur);
             int[,] grille = Grille.ObtenirGrilleJoueur(joueur);
             grille[x, y] = (int)Grille.Cases.TOUCHE;
-            vieBateaux[(int)type] = vieBateaux[(int)type] - 1;
+            int[,] decouverte = Grille.ObtenirGrilleDecouverteJoueur(Joueur.ObtenirAutreJoueur(joueur));
+            decouverte[x, y] = (int)Grille.Cases.TOUCHE;
+            //vieBateaux[(int)type] = vieBateaux[(int)type] - 1;
+            vieBateaux[(int)type] = 0;
+
             if (vieBateaux[(int)type] <= 0)
             {
                 // On marque la bateau comme coulé sur la grille
                 for (int o = 0; o < Bateau.LongueurBateaux[(int)type]; o++)
                 {
                     if (Bateau.ObtenirAlignementBateau(joueur, type) == ALIGNEMENT.COLONNE)
-                        grille[positionbateau[(int)type, 0], positionbateau[(int)type, 1]+o] = (int)Grille.Cases.COULE;
+                    {
+                        grille[positionbateau[(int)type, 0], positionbateau[(int)type, 1] + o] = (int)Grille.Cases.COULE;
+                        decouverte[positionbateau[(int)type, 0], positionbateau[(int)type, 1] + o] = (int)Grille.Cases.COULE;
+                    }
                     else
-                        grille[positionbateau[(int)type, 0]+o, positionbateau[(int)type, 1]] = (int)Grille.Cases.COULE;
+                    {
+                        grille[positionbateau[(int)type, 0] + o, positionbateau[(int)type, 1]] = (int)Grille.Cases.COULE;
+                        decouverte[positionbateau[(int)type, 0] + o, positionbateau[(int)type, 1]] = (int)Grille.Cases.COULE;
+                    }
                 }
                 Console.WriteLine("Un bateau a été coulé.");
                 return true;
@@ -252,38 +262,18 @@ namespace BatailleNavale
             int i = 0;
             while(trouve == false && i < Bateau.NombreTypesBateaux)
             {
-                // On voit si le point est sur la même droite que le bateau
-                int dxc = x - positionBateaux[i,0];
-                int dyc = y - positionBateaux[i, 1];
-
-                int dxl = positionBateaux[i, 2] - positionBateaux[i, 0];
-                int dyl = positionBateaux[i, 3] - positionBateaux[i, 1];
-
-                int cross = dxc * dyl - dyc * dxl;
-                if (cross == 0)
-                {
-
-                    // On vérifie si le point est compris sur le segment du bateau
-                    if (Math.Abs(dxl) >= Math.Abs(dyl))
-                    {
-                        if (dxl > 0)
-                            trouve = positionBateaux[i, 0] <= x && x <= positionBateaux[i, 2];
-                        else
-                            trouve = positionBateaux[i, 2] <= x && x <= positionBateaux[i, 0];
-                    }
-                    else
-                    {
-                        if (dyl > 0)
-                            trouve = positionBateaux[i, 1] <= y && y <= positionBateaux[i, 3];
-                        else
-                            trouve = positionBateaux[i, 3] <= y && y <= positionBateaux[i, 1];
-                    }
-                }
+                
+                trouve = positionBateaux[i, 0] <= x && x <= positionBateaux[i, 2] && positionBateaux[i, 1] <= y && y <= positionBateaux[i, 3];
                 i++;
             }
 
             if (trouve == true)
-                coule = Bateau.ToucherBateau(Joueur.ObtenirAutreJoueur(joueur), (Bateau.TYPES)(i - 1), x , y);
+                coule = Bateau.ToucherBateau(Joueur.ObtenirAutreJoueur(joueur), (Bateau.TYPES)(i - 1), x, y);
+            else
+            {
+                int[,] decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
+                decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;
+            }
             return trouve;
 
         }
