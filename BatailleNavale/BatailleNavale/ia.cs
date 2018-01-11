@@ -28,7 +28,7 @@ namespace BatailleNavale
         {
             do
             {
-                Random rdm = new Random();
+                Random rdm = Program.random;
                 x = rdm.Next(0, Grille.LargeurGrille);
                 y = rdm.Next(0, Grille.HauteurGrille);
 
@@ -52,7 +52,7 @@ namespace BatailleNavale
             bool positionValide = true;
             do
             {
-                Random rdm = new Random();
+                Random rdm = Program.random;
                 x = rdm.Next(0, Grille.LargeurGrille);
                 y = rdm.Next(0, Grille.HauteurGrille);
                 positionValide = Grille.ObtenirGrilleDecouverteJoueur(joueur)[x, y] != (int)Grille.Cases.VIDE;

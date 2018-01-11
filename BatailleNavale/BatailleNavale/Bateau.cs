@@ -91,7 +91,7 @@ namespace BatailleNavale
         /// <param name="joueur">Joueur dont on doit placer les bateaux</param>
         public static void PlacerBateauxAuHasard(int joueur)
         {
-            Random rnd = new Random();
+            Random rnd = Program.random;
             Bateau.ALIGNEMENT alignement = ALIGNEMENT.COLONNE;
             int x = 0;
             int y = 0;

@@ -66,19 +66,36 @@ namespace BatailleNavale
             return resultat;
         }
 
+        public static bool DemandeEffacerAnciennePartie()
+        {
+            Console.Clear();
+            ConsoleKey reponse;
+            do
+            {
+                Console.WriteLine("======= Sauvegarder une partie ===");
+                Console.WriteLine("Il existe déjà une sauvegarde précédente, voulez-vous l'écraser pour sauvegarder la partie courante ? (O/N)");
+                reponse = Console.ReadKey().Key;
+            }
+            while (reponse != ConsoleKey.O && reponse != ConsoleKey.N);
+            if (reponse == ConsoleKey.O)
+                return true;
+            return false;
+        }
 
         /// <summary>
         /// Sauvegarde les données de la partie en cours dans un fichier texte de sauvegarde
         /// </summary>
         public static void Sauvegarder()
         {
+            if (File.Exists(Sauvegarde.NomFichier) && Sauvegarde.DemandeEffacerAnciennePartie() == false)
+                return;
             // Sauvegarde positions J1
             string[] lignes = Sauvegarde.ConvertirObjetEnLigne(new string[0], Bateau.ObtenirPositionBateauxJoueur(1));
             // Sauvegarde vies J1
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Bateau.ObtenirVieBateauxJoueur(1));
-            // Sauvegarde positions J1
+            // Sauvegarde positions J2
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Bateau.ObtenirPositionBateauxJoueur(2));
-            // Sauvegarde vies J1
+            // Sauvegarde vies J2
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Bateau.ObtenirVieBateauxJoueur(2));
             // Sauvegarde grille j1
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Grille.ObtenirGrilleJoueur(1));
@@ -124,7 +141,7 @@ namespace BatailleNavale
             // Chargement de la grille du joueur 1
             for (int i = 0; i < Grille.GrilleJ1.GetLength(0); i++)
             {
-                data = ConvertirLigneEnTableauEntier(lignes[i]);
+                data = ConvertirLigneEnTableauEntier(lignes[index+i]);
                 for (int u = 0; u < data.Length; u++)
                     Grille.GrilleJ1[i, u] = data[u];
             }
@@ -132,7 +149,7 @@ namespace BatailleNavale
             // Chargement de la grille de découverte du joueur 1
             for (int i = 0; i < Grille.GrilleDecouverteJ1.GetLength(0); i++)
             {
-                data = ConvertirLigneEnTableauEntier(lignes[i]);
+                data = ConvertirLigneEnTableauEntier(lignes[index+i]);
                 for (int u = 0; u < data.Length; u++)
                     Grille.GrilleDecouverteJ1[i, u] = data[u];
             }
@@ -140,7 +157,7 @@ namespace BatailleNavale
             // Chargement de la grille du joueur 2
             for (int i = 0; i < Grille.GrilleJ2.GetLength(0); i++)
             {
-                data = ConvertirLigneEnTableauEntier(lignes[i]);
+                data = ConvertirLigneEnTableauEntier(lignes[index+i]);
                 for (int u = 0; u < data.Length; u++)
                     Grille.GrilleJ2[i, u] = data[u];
             }
@@ -148,7 +165,7 @@ namespace BatailleNavale
             // Chargement de la grille de découverte du joueur 2
             for (int i = 0; i < Grille.GrilleDecouverteJ2.GetLength(0); i++)
             {
-                data = ConvertirLigneEnTableauEntier(lignes[i]);
+                data = ConvertirLigneEnTableauEntier(lignes[index+i]);
                 for (int u = 0; u < data.Length; u++)
                     Grille.GrilleDecouverteJ2[i, u] = data[u];
             }

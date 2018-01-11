@@ -8,6 +8,8 @@ namespace BatailleNavale
 {
     class Program
     {
+        public static Random random = new Random();
+
         public static void ClearInputBuffer()
         {
             while (Console.KeyAvailable)

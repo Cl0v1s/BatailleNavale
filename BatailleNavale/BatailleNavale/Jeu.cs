@@ -113,6 +113,8 @@ namespace BatailleNavale
             Console.WriteLine("======= Nouvelle partie =======");
             Grille.AfficherGrille(Grille.GrilleJ1);
             Console.WriteLine("-------------------------------");
+            Grille.AfficherGrille(Grille.GrilleJ2);
+            Console.WriteLine("-------------------------------");
             Console.WriteLine("Etes-vous satisfait de ce placement ?");
             Console.WriteLine("(O)ui | N(on)");
             ConsoleKey key;
@@ -145,7 +147,7 @@ namespace BatailleNavale
                 if (Joueur.DemanderContinuer() == false)
                 {
                     Sauvegarde.Sauvegarder();
-                    Jeu.Quitter();
+                    Jeu.MenuPrincipal();
                 }
             }
         }
