@@ -171,6 +171,15 @@ namespace BatailleNavale
             }
             index += Grille.GrilleDecouverteJ2.GetLength(0);
 
+            // Gestion du nombre de tirs par salves 
+            for(int i = 0; i < Bateau.NombreTypesBateaux; i++)
+            {
+                if (Bateau.VieBateauxJ1[i] <= 0)
+                    Joueur.TailleSalveJ2--;
+                if (Bateau.VieBateauxJ2[i] <= 0)
+                    Joueur.TailleSalveJ1--;
+            }
+
         }
     }
 }

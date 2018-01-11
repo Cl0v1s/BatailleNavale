@@ -245,6 +245,10 @@ namespace BatailleNavale
         public static bool Tirer(int joueur, int x, int y, out bool coule)
         {
             coule = false;
+            if (Grille.ObtenirGrilleDecouverteJoueur(joueur)[x,y] != (int)Grille.Cases.VIDE)
+            {
+                return false;    
+            }
             int[,] positionBateaux = null;
             int[] vieBateaux = null;
             if (joueur == 1)
