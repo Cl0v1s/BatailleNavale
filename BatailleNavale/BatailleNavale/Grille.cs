@@ -84,7 +84,13 @@ namespace BatailleNavale
         /// <param name="grille">grille à afficher</param>
         public static void AfficherGrille(int[,] grille)
         {
-            Console.WriteLine("     A  B  C  D  E  F  G  H  I  J");
+            Console.Write("     ");
+            for (int i = 0; i < 10; i++)
+            {
+                Console.Write(Lettres[i]);
+                Console.Write("  ");
+            }
+            Console.WriteLine();
             for (int i = 0; i < 10; i++)
             {
                 Console.Write("   ");

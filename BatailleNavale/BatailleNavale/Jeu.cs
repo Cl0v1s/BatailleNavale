@@ -180,12 +180,22 @@ namespace BatailleNavale
             {
                 Console.Clear();
                 Joueur.Jouer(joueur);
+                if (Bateau.calculVie(Joueur.ObtenirAutreJoueur(joueur)) == true)
+                {
+                    Quitter();
+                }
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
+
+
                 Console.WriteLine("-- Appuyez sur une touche pour passer au tour de l'autre joueur --");
                 Console.ReadKey(false);
                 Console.Clear();
                 Joueur.Jouer(joueur);
-                joueur = Joueur.ObtenirAutreJoueur(joueur);
+                if (Bateau.calculVie(1) == true)
+                {
+                    Quitter();
+                }
+                joueur = Joueur.ObtenirAutreJoueur(Joueur.ObtenirAutreJoueur(joueur));
                 if (Joueur.DemanderContinuer() == false)
                 {
                     Sauvegarde.Sauvegarder();
@@ -197,6 +207,8 @@ namespace BatailleNavale
         public static void Quitter()
         {
             Console.WriteLine("Au revoir !");
+            Console.Write("appuyer sur une touche");
+            Console.ReadKey(false);
             System.Environment.Exit(0);
         }
 

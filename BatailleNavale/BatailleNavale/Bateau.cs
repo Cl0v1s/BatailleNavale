@@ -280,5 +280,22 @@ namespace BatailleNavale
             return trouve;
 
         }
+        public static bool calculVie(int joueur)
+        {
+            int vieRestante = 0;
+            for(int i = 0; i<Bateau.NombreTypesBateaux; i++)
+            {
+                vieRestante += Bateau.ObtenirVieBateauxJoueur(joueur)[i];
+            }
+            if (vieRestante==0)
+            {
+                Console.WriteLine("Le joueur" + joueur + "a gagner");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
