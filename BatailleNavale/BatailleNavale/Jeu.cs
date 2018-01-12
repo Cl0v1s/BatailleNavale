@@ -72,6 +72,37 @@ namespace BatailleNavale
             Console.Clear();
             Joueur.Start();
             Console.WriteLine("======= Charger une partie =======");
+            Console.WriteLine("Veuillez séléctionner une sauvegarde ci-dessous");
+            string[] sauvegardes = Sauvegarde.RecupererFichiersSauvegarde();
+            for(int i = 0; i < sauvegardes.Length; i++)
+            {
+                Console.WriteLine("(" + (i + 1) + ")" + sauvegardes[i]);
+            }
+            int index = -1;
+            do
+            {
+                try
+                {
+                    index = Convert.ToInt32(Console.ReadLine());
+                    index = index - 1;
+                    if (index < 0 || index >= sauvegardes.Length)
+                        index = -1;
+                }
+                catch(Exception)
+                {
+                    index = -1;
+                }
+                if(index == -1)
+                {
+                    Console.WriteLine("Ce n'est pas une sélection valide. Veuillez réessayer.");
+                }
+            }
+            while (index == -1);
+
+            Sauvegarde.ReglerFichierSauvegarde(sauvegardes[index]);
+
+            Console.Clear();
+            Console.WriteLine("======= Charger une partie =======");
             try
             {
                 Sauvegarde.Charger();

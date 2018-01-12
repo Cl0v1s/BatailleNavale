@@ -73,6 +73,26 @@ namespace BatailleNavale
             return resultat;
         }
 
+        public static void ReglerFichierSauvegarde(string nom)
+        {
+            string last = nom.Replace(Sauvegarde.NomFichierPrefix, "").Replace(Sauvegarde.NomFichierSufix, "").Replace(".", "").Replace("\\", "");
+            Sauvegarde.NomFichierIndex = Convert.ToInt32(last);
+        }
+
+        public static string[] RecupererFichiersSauvegarde()
+        {
+            return Directory.GetFiles(".", Sauvegarde.NomFichierPrefix + "*");
+        }
+
+        public static int RecupererDernierIndexSauvegarde()
+        {
+            string[] files = Directory.GetFiles(".", Sauvegarde.NomFichierPrefix+"*");
+            if (files.Length <= 0)
+                return 0;
+            string last = files[files.Length - 1].Replace(Sauvegarde.NomFichierPrefix, "").Replace(Sauvegarde.NomFichierSufix, "").Replace(".", "").Replace("\\", "");
+            return Convert.ToInt32(last);
+        }
+
         public static bool DemandeEffacerAnciennePartie()
         {
             Console.Clear();
@@ -81,6 +101,7 @@ namespace BatailleNavale
             {
                 Console.WriteLine("======= Sauvegarder une partie ===");
                 Console.WriteLine("Il existe déjà une sauvegarde précédente, voulez-vous l'écraser pour sauvegarder la partie courante ? (O/N)");
+                Console.WriteLine("(Si vous répondez (N), un nouveau fichier de sauvegarde sera créé)");
                 reponse = Console.ReadKey().Key;
             }
             while (reponse != ConsoleKey.O && reponse != ConsoleKey.N);
@@ -94,8 +115,10 @@ namespace BatailleNavale
         /// </summary>
         public static void Sauvegarder()
         {
-            if (File.Exists(Sauvegarde.NomFichier) && Sauvegarde.DemandeEffacerAnciennePartie() == false)
-                return;
+            if (File.Exists(Sauvegarde.NomFichier()) && Sauvegarde.DemandeEffacerAnciennePartie() == false)
+            {
+                NomFichierIndex = Sauvegarde.RecupererDernierIndexSauvegarde() + 1;
+            }
             // Sauvegarde positions J1
             string[] lignes = Sauvegarde.ConvertirObjetEnLigne(new string[0], Bateau.ObtenirPositionBateauxJoueur(1));
             // Sauvegarde vies J1
@@ -113,6 +136,11 @@ namespace BatailleNavale
             // Sauvegarde grille decouverte J2
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Grille.ObtenirGrilleDecouverteJoueur(2));
             File.WriteAllLines(Sauvegarde.NomFichier(), lignes);
+            Console.Clear();
+            Console.WriteLine("======= Sauvegarder une partie ===");
+            Console.WriteLine("Votre partie a été sauvegardée dans le fichier "+Sauvegarde.NomFichier());
+            Console.WriteLine("-- Appuyez sur une touche pour continuer --");
+            Console.ReadKey(false);
         }
 
         /// <summary>
