@@ -12,6 +12,12 @@ namespace BatailleNavale
         public static int TailleSalveJ1 = Bateau.NombreTypesBateaux;
         public static int TailleSalveJ2 = Bateau.NombreTypesBateaux;
 
+        public static void Start()
+        {
+            Joueur.TailleSalveJ1 = Bateau.NombreTypesBateaux;
+            Joueur.TailleSalveJ2 = Bateau.NombreTypesBateaux;
+    }
+
         public static int ObtenirTailleSalve(int joueur)
         {
             if (joueur == 1)
@@ -166,24 +172,28 @@ namespace BatailleNavale
         public static void JouerIA(int joueur)
         {
             int x, y;
-            int taillesalve = Joueur.ObtenirTailleSalve(joueur);
-            for (int i = 0; i < taillesalve ; i++)
+            int[,] salves = new int[Joueur.ObtenirTailleSalve(joueur), 2];
+            for (int i = 0; i < salves.GetLength(0); i++)
             {
-                IA.PositionIA(joueur, out x, out y);
+                IA.PositionIA(joueur, out x,out y, i);
+                salves[i, 0] = x;
+                salves[i, 1] = y;
+            }
+
+            for (int i = 0; i < salves.GetLength(0) ; i++)
+            {
+                x = salves[i, 0];
+                y = salves[i, 1];
                 Console.Write("L'ordinateur tire sur la cellule " + Grille.Lettres[y] + "" + (x + 1) + " ...");
                 int[,] decouverte;
                 bool coule = false;
                 if (Bateau.Tirer(joueur, x, y, out coule) == true) // IA a touché
                 {
-                    decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
-                    decouverte[x, y] = (int)Grille.Cases.TOUCHE;
-                    int[,] grille_autre = Grille.ObtenirGrilleJoueur(Joueur.ObtenirAutreJoueur(joueur));
-                    grille_autre[x, y] = (int)Grille.Cases.TOUCHE;
-                    IA.SignalerTouche();
+                    IA.SignalerTouche(i);
                     if (coule)
                     {
                         Console.WriteLine("L'ordinateur a coulé un navire !");
-                        IA.SignalerCoule();
+                        IA.SignalerCoule(joueur, i);
                         Joueur.ReglerTailleSalve(joueur, Joueur.ObtenirTailleSalve(joueur) - 1);
                     }
                     else
@@ -191,6 +201,7 @@ namespace BatailleNavale
                 }
                 else // IA n'a pas touché 
                 {
+                    IA.SignalerRate(i);
                     Console.WriteLine("C'est un coup dans l'eau...");
                     decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
                     decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;

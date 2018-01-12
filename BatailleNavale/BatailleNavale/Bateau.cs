@@ -91,7 +91,7 @@ namespace BatailleNavale
         /// <param name="joueur">Joueur dont on doit placer les bateaux</param>
         public static void PlacerBateauxAuHasard(int joueur)
         {
-            Random rnd = new Random();
+            Random rnd = Program.random;
             Bateau.ALIGNEMENT alignement = ALIGNEMENT.COLONNE;
             int x = 0;
             int y = 0;
@@ -245,6 +245,10 @@ namespace BatailleNavale
         public static bool Tirer(int joueur, int x, int y, out bool coule)
         {
             coule = false;
+            if (Grille.ObtenirGrilleDecouverteJoueur(joueur)[x,y] != (int)Grille.Cases.VIDE)
+            {
+                return false;    
+            }
             int[,] positionBateaux = null;
             int[] vieBateaux = null;
             if (joueur == 1)

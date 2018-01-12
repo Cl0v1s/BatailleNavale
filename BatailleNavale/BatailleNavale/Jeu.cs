@@ -70,6 +70,7 @@ namespace BatailleNavale
         public static void ChargerPartie()
         {
             Console.Clear();
+            Joueur.Start();
             Console.WriteLine("======= Charger une partie =======");
             try
             {
@@ -90,7 +91,10 @@ namespace BatailleNavale
 
         public static void DemarrerNouvellePartie()
         {
+            
             Console.Clear();
+            Joueur.Start();
+
 
             // Initialisation des grilles
             Grille.GrilleJ1 = new int[Grille.LargeurGrille, Grille.HauteurGrille];
@@ -132,7 +136,8 @@ namespace BatailleNavale
         public static void DeroulementPartie()
         {
             int joueur = 1;
-            while(true)
+            IA.Reset();
+            while (true)
             {
                 Console.Clear();
                 Joueur.Jouer(joueur);
@@ -145,7 +150,7 @@ namespace BatailleNavale
                 if (Joueur.DemanderContinuer() == false)
                 {
                     Sauvegarde.Sauvegarder();
-                    Jeu.Quitter();
+                    Jeu.MenuPrincipal();
                 }
             }
         }
