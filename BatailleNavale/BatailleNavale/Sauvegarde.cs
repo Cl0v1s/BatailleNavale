@@ -10,7 +10,14 @@ namespace BatailleNavale
 {
     class Sauvegarde
     {
-        public static string NomFichier = "Sauvegarde.txt";
+        public static string NomFichierPrefix = "Sauvegarde";
+        public static string NomFichierSufix = ".txt";
+        public static int NomFichierIndex = 1;
+
+        public static string NomFichier()
+        {
+            return NomFichierPrefix + " " + NomFichierIndex + NomFichierSufix;
+        }
 
 
         /// <summary>
@@ -88,7 +95,7 @@ namespace BatailleNavale
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Grille.ObtenirGrilleJoueur(2));
             // Sauvegarde grille decouverte J2
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Grille.ObtenirGrilleDecouverteJoueur(2));
-            File.WriteAllLines(Sauvegarde.NomFichier, lignes);
+            File.WriteAllLines(Sauvegarde.NomFichier(), lignes);
         }
 
         /// <summary>
@@ -96,7 +103,7 @@ namespace BatailleNavale
         /// </summary>
         public static void Charger()
         {
-            string[] lignes = File.ReadAllLines(Sauvegarde.NomFichier);
+            string[] lignes = File.ReadAllLines(Sauvegarde.NomFichier());
             int index = 0;
             int[] data;
             // Chargement de la position des bateaux du joueur 1

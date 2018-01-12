@@ -179,7 +179,6 @@ namespace BatailleNavale
                     decouverte[x, y] = (int)Grille.Cases.TOUCHE;
                     int[,] grille_autre = Grille.ObtenirGrilleJoueur(Joueur.ObtenirAutreJoueur(joueur));
                     grille_autre[x, y] = (int)Grille.Cases.TOUCHE;
-                    Console.WriteLine("L'ordinateur a touché un navire !");
                     IA.SignalerTouche();
                     if (coule)
                     {
@@ -187,6 +186,8 @@ namespace BatailleNavale
                         IA.SignalerCoule();
                         Joueur.ReglerTailleSalve(joueur, Joueur.ObtenirTailleSalve(joueur) - 1);
                     }
+                    else
+                        Console.WriteLine("L'ordinateur a touché un navire !");
                 }
                 else // IA n'a pas touché 
                 {
