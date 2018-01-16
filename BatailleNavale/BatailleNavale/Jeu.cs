@@ -17,6 +17,7 @@ namespace BatailleNavale
         /// </summary>
         public enum Niveau
         {
+            ENFANT = 0,
             FACILE = 1, 
             NORMAL = 2
         };
@@ -70,11 +71,11 @@ namespace BatailleNavale
                     Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Veuillez choisir une option ci-dessous");
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("(F) Commencer une partie contre l'ordinateur niveau Facile \n(N) Commencer une partie contre l'ordinateur niveau Normal \n(R)etour");
+                Console.WriteLine("(E) Commencer une partie contre l'ordinateur niveau Enfant \n(F) Commencer une partie contre l'ordinateur niveau Facile \n(N) Commencer une partie contre l'ordinateur niveau Normal \n(R)etour");
                 Console.ResetColor();
                 key = Console.ReadKey().Key;
             }
-            while (key != ConsoleKey.F && key != ConsoleKey.N && key != ConsoleKey.R);
+            while (key != ConsoleKey.F && key != ConsoleKey.N && key != ConsoleKey.R && key != ConsoleKey.E);
             Program.ViderTampon();
             if (key == ConsoleKey.R)
                 Jeu.MenuPrincipal();
@@ -86,6 +87,11 @@ namespace BatailleNavale
             else if(key == ConsoleKey.N)
             {
                 Jeu.NiveauJeu = Niveau.NORMAL;
+                Jeu.MenuDemarrerNouvellePartie();
+            }
+            else if (key == ConsoleKey.E)
+            {
+                Jeu.NiveauJeu = Niveau.ENFANT;
                 Jeu.MenuDemarrerNouvellePartie();
             }
         }

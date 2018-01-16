@@ -69,19 +69,21 @@ namespace BatailleNavale
         public static void PositionIA(int joueur, out int x, out int y, int canon = 0)
         {
             x = 0; y = 0;
-            if (Jeu.NiveauJeu == Jeu.Niveau.FACILE)
-                PositionIAFacile(joueur, out x, out y);
+            if (Jeu.NiveauJeu == Jeu.Niveau.ENFANT)
+                PositionIAEnfant(joueur, out x, out y);
+            else if (Jeu.NiveauJeu == Jeu.Niveau.FACILE)
+                PositionIAFacile(joueur, out x, out y, canon);
             else if (Jeu.NiveauJeu == Jeu.Niveau.NORMAL)
                 PositionIANormal(joueur, out x, out y, canon);
         }
 
         /// <summary>
-        /// Calcule naivement la position d'un tir de l'IA vers une cellule donnée
+        /// Calcule "très naivement" la position d'un tir de l'IA vers une cellule donnée
         /// </summary>
         /// <param name="joueur">joueur correspondant à l'IA</param>
         /// <param name="x">Entrée-sortie, à la fin de la fonction, contient la position x du tir</param>
         /// <param name="y">Entrée-sortie, à la fin de la fonction, contient la position y du tir</param>
-        private static void PositionIAFacile(int joueur, out int x, out int y)
+        private static void PositionIAEnfant(int joueur, out int x, out int y)
         {
             do
             {
@@ -91,6 +93,19 @@ namespace BatailleNavale
 
             }
             while (Grille.ObtenirGrilleDecouverteJoueur(joueur)[x, y] != (int)Grille.Cases.VIDE);
+        }
+
+        /// <summary>
+        /// Calcule naivement la position d'un tir de l'IA vers une cellule donnée
+        /// </summary>
+        /// <param name="joueur">joueur correspondant à l'IA</param>
+        /// <param name="x">Entrée-sortie, à la fin de la fonction, contient la position x du tir</param>
+        /// <param name="y">Entrée-sortie, à la fin de la fonction, contient la position y du tir</param>
+        private static void PositionIAFacile(int joueur, out int x, out int y, int canon)
+        {
+            x = 0;
+            y = 0;
+            IA.PositionAuHasard(joueur,out x,out y, canon);
         }
 
 
