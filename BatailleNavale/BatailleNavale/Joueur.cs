@@ -113,7 +113,7 @@ namespace BatailleNavale
         /// <param name="joueur">Joueur dont c'est le tour de jouer</param>
         public static void Jouer(int joueur)
         {
-            Console.WriteLine("==NOUVEAU TOUR DU JOUEUR "+joueur+"=============");
+            Console.WriteLine("==TOUR DU JOUEUR "+joueur+"=============");
             // A faire évoluer si de deux joueurs 
             if (joueur == 1)
                 Joueur.JouerHumain(joueur);
@@ -147,13 +147,17 @@ namespace BatailleNavale
         {
             int x, y;
             int[,] salves = new int[Joueur.ObtenirTailleSalve(joueur),2];
-            Console.WriteLine("Votre Grille:");
+            /*Console.WriteLine("Votre Grille:");
             Grille.AfficherGrille(Grille.ObtenirGrilleJoueur(joueur));
             Console.WriteLine("Ce que vous savez de la Grille de l'adversaire:");
-            Grille.AfficherGrille(Grille.ObtenirGrilleDecouverteJoueur(joueur));
+            Grille.AfficherGrille(Grille.ObtenirGrilleDecouverteJoueur(joueur));*/
             for (int i = 0; i < salves.GetLength(0); i++)
             {
-                Console.WriteLine("------------------------");
+                Console.Clear();
+                Console.WriteLine("==TOUR DU JOUEUR " + joueur + "=============");
+                string infoGrilles = "Votre Grille:                          Ce que vous savez de la grille de votre adversaire:";
+                Console.WriteLine(infoGrilles);
+                Grille.AfficherDeuxGrillesCoteACote(Grille.ObtenirGrilleJoueur(joueur), Grille.ObtenirGrilleDecouverteJoueur(joueur));
                 Console.WriteLine("Paramétrage du canon " + (i + 1) + "/" + salves.GetLength(0));
                 DemanderPosition(joueur, out x, out y);
                 salves[i, 0] = x;

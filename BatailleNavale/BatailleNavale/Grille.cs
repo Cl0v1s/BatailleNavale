@@ -77,57 +77,74 @@ namespace BatailleNavale
             throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
         }
 
+        public static void AfficherDeuxGrillesCoteACote(int[,] grille1, int[,] grille2)
+        {
+            string[] g1 = Grille.ConvertirGrilleVersTexte(grille1).Split("\n".ToCharArray());
+            string[] g2 = Grille.ConvertirGrilleVersTexte(grille2).Split("\n".ToCharArray());
 
-        /// <summary>
-        /// Affiche la grille passée en paramètre
-        /// </summary>
-        /// <param name="grille">grille à afficher</param>
+            for(int i = 0; i < g1.Length && i < g2.Length; i++)
+            {
+                Console.Write(g1[i] + "    " + g2[i]);
+                if (i < g1.Length - 1 && i < g2.Length)
+                    Console.Write("\n");
+            }
+
+        }
+
         public static void AfficherGrille(int[,] grille)
         {
-            Console.Write("     ");
-            for (int i = 0; i < 10; i++)
+            Console.Write(Grille.ConvertirGrilleVersTexte(grille));
+        }
+
+       
+        public static string ConvertirGrilleVersTexte(int[,] grille)
+        {
+            string res = "";
+            res += ("     ");
+            for (int i = 0; i < Grille.LargeurGrille; i++)
             {
-                Console.Write(Lettres[i]);
-                Console.Write("  ");
+                res += (Lettres[i]);
+                if(i < Grille.LargeurGrille - 1)
+                    res += ("  ");
             }
-            Console.WriteLine();
+            res += ("\n");
             for (int i = 0; i < 10; i++)
             {
-                Console.Write("   ");
-                for (int j = 0; j < 10; j++)
+                res += ("   ");
+                for (int j = 0; j < Grille.LargeurGrille; j++)
                 {
-                    Console.Write("+--");
+                    res += ("+--");
                 }
-                Console.WriteLine("+");
+                res += ("+\n");
                 if (i < 9)
                 {
-                    Console.Write((i + 1) + "  |");
+                    res += ((i + 1) + "  |");
                 }
                 else
                 {
-                    Console.Write((i + 1) + " |");
+                    res += ((i + 1) + " |");
                 }
                 for (int j = 0; j < 10; j++)
                 {
                     if (grille[i, j] == (int)Grille.Cases.PLEIN)
-                        Console.Write("B");
+                        res += ("B");
                     else if (grille[i, j] == (int)Grille.Cases.VIDE)
-                        Console.Write(" ");
+                        res += (" ");
                     else if (grille[i, j] == (int)Grille.Cases.DECOUVERT_VIDE)
-                        Console.Write("X");
+                        res += ("X");
                     else if (grille[i, j] == (int)Grille.Cases.TOUCHE)
-                        Console.Write("O");
+                        res += ("O");
                     else if (grille[i, j] == (int)Grille.Cases.COULE)
-                        Console.Write("0");
+                        res += ("0");
                     if (j != 9)
                     {
-                        Console.Write(" |");
+                        res += (" |");
                     }
                 }
-                Console.WriteLine(" |");
+                res += (" |\n");
             }
-            Console.WriteLine("   +--+--+--+--+--+--+--+--+--+--+");
-
+            res += ("   +--+--+--+--+--+--+--+--+--+--+\n");
+            return res;
         }
 
         /// <summary>
