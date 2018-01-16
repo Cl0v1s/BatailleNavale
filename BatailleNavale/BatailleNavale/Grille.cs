@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
+    /// <summary>
+    /// Classe statique permettant de réalier des opérations sur les grilles
+    /// </summary>
     class Grille
     {
 
@@ -21,12 +24,22 @@ namespace BatailleNavale
             DECOUVERT_VIDE = 4
         };
 
+        /// <summary>
+        /// Lettre associées aux cellules
+        /// </summary>
         public static string[] Lettres = new string[]
         {
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"
         };
 
+        /// <summary>
+        /// Largeur de la grille
+        /// </summary>
         public const int LargeurGrille = 10;
+
+        /// <summary>
+        /// Hauteur de la grille
+        /// </summary>
         public const int HauteurGrille = 10;
 
         /// <summary>
@@ -77,6 +90,11 @@ namespace BatailleNavale
             throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
         }
 
+        /// <summary>
+        /// Permet d'afficher deux représentations de grilles côtes à cotes
+        /// </summary>
+        /// <param name="grille1">Grille à afficher à gauche</param>
+        /// <param name="grille2">Grille à afficher à droite</param>
         public static void AfficherDeuxGrillesCoteACote(int[,] grille1, int[,] grille2)
         {
             string[] g1 = Grille.ConvertirGrilleVersTexte(grille1).Split("\n".ToCharArray());
@@ -91,12 +109,20 @@ namespace BatailleNavale
 
         }
 
+        /// <summary>
+        /// Affiche la grille passée en paramètre dans la console
+        /// </summary>
+        /// <param name="grille">Grille à afficher</param>
         public static void AfficherGrille(int[,] grille)
         {
             Console.Write(Grille.ConvertirGrilleVersTexte(grille));
         }
 
-       
+       /// <summary>
+       /// Retourne une représentation textuelle d'une grille (en vue de l'afficher) 
+       /// </summary>
+       /// <param name="grille">Grille à convertir</param>
+       /// <returns>Une chaine de caractères contenant la représentation de la grille</returns>
         public static string ConvertirGrilleVersTexte(int[,] grille)
         {
             string res = "";

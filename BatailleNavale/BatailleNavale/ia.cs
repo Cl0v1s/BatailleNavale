@@ -6,20 +6,40 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
+    /// <summary>
+    /// Classe statique permettant de gérer l'intelligence artificielle du jeu
+    /// </summary>
     class IA
     {
 
-        /*
-        private static int DernierTirTouche = -1;
-        private static int Direction = 0;
-        private static int Combo = 0;*/
-
+        /// <summary>
+        /// Liste des dernières positions x des tirs pour chacun des canons
+        /// </summary>
         private static int[] DerniersTirsX = new int[Bateau.NombreTypesBateaux];
+
+        /// <summary>
+        /// Liste des dernières positions y des tirs pour chacun des canons
+        /// </summary>
         private static int[] DerniersTirsY = new int[Bateau.NombreTypesBateaux];
+
+        /// <summary>
+        /// Liste des combos (enchainement de tirs touchés) pour chacun des canons
+        /// </summary>
         private static int[] DerniersTirsCombo = new int[Bateau.NombreTypesBateaux];
+
+        /// <summary>
+        /// Liste contenant les directions prises pour chacuns des canons
+        /// </summary>
         private static int[] DirectionsTirs = new int[Bateau.NombreTypesBateaux];
+
+        /// <summary>
+        /// Vrai si l'IA a été initialisée
+        /// </summary>
         private static bool initialized = false;
 
+        /// <summary>
+        /// Initialise l'intelligence artificielle
+        /// </summary>
         public static void Start()
         {
             IA.DerniersTirsX = new int[Bateau.NombreTypesBateaux];
@@ -31,11 +51,21 @@ namespace BatailleNavale
             IA.initialized = true;
         }
 
+        /// <summary>
+        /// Marque l'intelligence articifielle comme n'étant par encore initialisée
+        /// </summary>
         public static void Reset()
         {
             IA.initialized = false;
         }
 
+        /// <summary>
+        /// Calcule la position d'un tir de l'IA vers une cellule donnée
+        /// </summary>
+        /// <param name="joueur">joueur correspondant à l'IA</param>
+        /// <param name="x">Entrée-sortie, à la fin de la fonction, contient la position x du tir </param>
+        /// <param name="y">Entrée-sortie, à la fin de la fonction, contient la position y du tir</param>
+        /// <param name="canon">Index du canon utilisé par l'IA</param>
         public static void PositionIA(int joueur, out int x, out int y, int canon = 0)
         {
             x = 0; y = 0;
@@ -45,6 +75,12 @@ namespace BatailleNavale
                 PositionIANormal(joueur, out x, out y, canon);
         }
 
+        /// <summary>
+        /// Calcule naivement la position d'un tir de l'IA vers une cellule donnée
+        /// </summary>
+        /// <param name="joueur">joueur correspondant à l'IA</param>
+        /// <param name="x">Entrée-sortie, à la fin de la fonction, contient la position x du tir</param>
+        /// <param name="y">Entrée-sortie, à la fin de la fonction, contient la position y du tir</param>
         private static void PositionIAFacile(int joueur, out int x, out int y)
         {
             do
@@ -57,6 +93,14 @@ namespace BatailleNavale
             while (Grille.ObtenirGrilleDecouverteJoueur(joueur)[x, y] != (int)Grille.Cases.VIDE);
         }
 
+
+        /// <summary>
+        /// Calcule "intelligement" la position d'un tir de l'IA vers une cellule donnée
+        /// </summary>
+        /// <param name="joueur">joueur correspondant à l'IA</param>
+        /// <param name="x">Entrée-sortie, à la fin de la fonction, contient la position x du tir</param>
+        /// <param name="y">Entrée-sortie, à la fin de la fonction, contient la position y du tir</param>
+        /// <param name="canon">Index du canon utilisé</param>
         private static void PositionIANormal(int joueur, out int x, out int y, int canon)
         {
             if (IA.initialized == false)
@@ -104,12 +148,21 @@ namespace BatailleNavale
 
         }
 
+        /// <summary>
+        /// Signale à l'IA que le canon passé en paramètre a touché un bateau
+        /// </summary>
+        /// <param name="canon">Canon concerné</param>
         public static void SignalerTouche(int canon)
         {
             if (IA.DirectionsTirs[canon] == -1)
                 IA.DirectionsTirs[canon] = 0;
         }
 
+        /// <summary>
+        /// Signale à l'IA que le canon passé en paramètre a coulé un bateau.
+        /// </summary>
+        /// <param name="joueur">Joueur correspondant à l'IA</param>
+        /// <param name="canon">Canon concerné</param>
         public static void SignalerCoule(int joueur, int canon)
         {
             IA.ResetCanon(canon);
@@ -125,12 +178,20 @@ namespace BatailleNavale
             }
         }
 
+        /// <summary>
+        /// Remet à zéro les données associées au canon passé en paramètre
+        /// </summary>
+        /// <param name="canon">Index du canon concerné</param>
         private static void ResetCanon(int canon)
         {
             IA.DerniersTirsCombo[canon] = 0;
             IA.DirectionsTirs[canon] = -1;
         }
 
+        /// <summary>
+        /// Signale à l'IA que le canon passé en paramètre a raté
+        /// </summary>
+        /// <param name="canon">Canon concerné</param>
         public static void SignalerRate(int canon)
         {
             if (IA.DirectionsTirs[canon] == -1)
@@ -168,7 +229,13 @@ namespace BatailleNavale
         }
 
 
-
+        /// <summary>
+        /// Renvoie une position au hasard de manière "non-naive" (c'est à dire en prenant en compte les tirs des autres canons, et les tirs déja effectués)
+        /// </summary>
+        /// <param name="joueur">Joueur associé à l'IA</param>
+        /// <param name="x">Entrée-sortie, à la fin de la fonction, contient la position x du tir</param>
+        /// <param name="y">Entrée-sortie, à la fin de la fonction, contient la position y du tir</param>
+        /// <param name="canon">Index du canon utilisé</param>
         private static void PositionAuHasard(int joueur, out int x, out int y, int canon)
         {
             bool positionValide = true;

@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
+    /// <summary>
+    /// Classe statique permettant d'effectuer des opérations sur les bateaux
+    /// </summary>
     class Bateau
     {
+        /// <summary>
+        /// Enumération des différents alignements pouvant être pris par les bateaux 
+        /// </summary>
         public enum ALIGNEMENT
         {
             LIGNE = 0,
@@ -51,7 +57,11 @@ namespace BatailleNavale
         public static int[,] PositionBateauxJ2 = new int[Bateau.NombreTypesBateaux, 4];
         public static int[] VieBateauxJ2 = new int[Bateau.NombreTypesBateaux];
 
-
+        /// <summary>
+        /// Retourne un tableau contenant les positions des bateaux du joueur passé en paramètre 
+        /// </summary>
+        /// <param name="joueur">Le joueur dont on veut récupérer les positions des bateaux</param>
+        /// <returns>Tableau contenant les positions des bateaux du joueur</returns>
         public static int[,] ObtenirPositionBateauxJoueur(int joueur)
         {
             if (joueur == 1)
@@ -61,6 +71,11 @@ namespace BatailleNavale
             throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
         }
 
+        /// <summary>
+        /// Retourne un tableau contenant les vies des bateaux du joueur passé en paramètres
+        /// </summary>
+        /// <param name="joueur">Le joueur dont on veut récupérer les points de vue du bateau</param>
+        /// <returns>Tableu contenant les points de vie des bateaux du joueur passé en paramètre</returns>
         public static int[] ObtenirVieBateauxJoueur(int joueur)
         {
             if (joueur == 1)
@@ -242,6 +257,14 @@ namespace BatailleNavale
             return false;
         }
 
+        /// <summary>
+        /// Tente un tir sur une cellule par le joueur précisé
+        /// </summary>
+        /// <param name="joueur">Joueur réalisant le tir</param>
+        /// <param name="x">Position x de la cellule visée</param>
+        /// <param name="y">Position y de la cellule visée</param>
+        /// <param name="coule">Paramètre entrée sortie, contient vrai si un bateau a été coulé suite au tir</param>
+        /// <returns>Vrai si un bateau a été touché, faux sinon</returns>
         public static bool Tirer(int joueur, int x, int y, out bool coule)
         {
             coule = false;
