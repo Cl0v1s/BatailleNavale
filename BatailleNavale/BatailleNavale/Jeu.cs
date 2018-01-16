@@ -238,7 +238,9 @@ namespace BatailleNavale
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Le joueur " + joueur + " a gagné !!!");
                     Console.ResetColor();
-                    Quitter();
+                    Console.WriteLine("-- Appuyez sur une touche pour passer au tour de l'autre joueur --");
+                    Console.ReadKey(false);
+                    Jeu.MenuPrincipal();
                 }
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
                 Console.WriteLine("-- Appuyez sur une touche pour passer au tour de l'autre joueur --");
@@ -250,7 +252,10 @@ namespace BatailleNavale
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Le joueur " + joueur + " a gagné :'(");
                     Console.ResetColor();
-                    Quitter();
+                    Console.WriteLine("-- Appuyez sur une touche pour passer au tour de l'autre joueur --");
+                    Console.ReadKey(false);
+                    Jeu.MenuPrincipal();
+
                 }
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
                 if (Joueur.DemanderContinuer() == false)
