@@ -196,7 +196,15 @@ namespace BatailleNavale
                 string infoGrilles = "Votre Grille:                          Ce que vous savez de la grille de votre adversaire:";
                 Console.WriteLine(infoGrilles);
                 Grille.AfficherDeuxGrillesCoteACote(Grille.ObtenirGrilleJoueur(joueur), Grille.ObtenirGrilleDecouverteJoueur(joueur));
-                Console.WriteLine("Paramétrage du canon " + (i + 1) + "/" + salves.GetLength(0));
+                Console.WriteLine("\n-------\nParamétrage du canon " + (i + 1) + "/" + salves.GetLength(0));
+                Console.Write("Tirs paramétrés: ");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                for (int o = 0; o < i;o++)
+                {
+                    Console.Write(Grille.Lettres[salves[o,1]] + "" + (salves[o,0] + 1)+" ");
+                }
+                Console.WriteLine("");
+                Console.ResetColor();
                 DemanderPosition(joueur, out x, out y);
                 salves[i, 0] = x;
                 salves[i, 1] = y;

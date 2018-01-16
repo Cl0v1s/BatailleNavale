@@ -32,6 +32,7 @@ namespace BatailleNavale
         public static void MenuPrincipal()
         {
             Console.Clear();
+            Console.SetWindowSize(90, 50);
             Console.WriteLine("======= Bataille Navale =======");
             Console.WriteLine("Version 1.0 dévelopée par Hugo Le Tarnec et Clovis Portron");
             ConsoleKey key = default(ConsoleKey);
