@@ -103,11 +103,16 @@ namespace BatailleNavale
         /// <returns>Vrai si il faut continuer, faux sinon</returns>
         public static bool DemanderContinuer()
         {
-            ConsoleKey reponse;
+            ConsoleKey reponse = default(ConsoleKey);
             do
             {
-                Console.WriteLine("Voulez-vous continuer à jouer ? (O/N)");
-                reponse = Console.ReadKey().Key;
+                if (reponse != default(ConsoleKey))
+                    Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Voulez-vous continuer à jouer ?");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("O)ui | N)on");
+                Console.ResetColor();
+                reponse = Console.ReadKey(false).Key;
             }
             while (reponse != ConsoleKey.O && reponse != ConsoleKey.N);
             if (reponse == ConsoleKey.O)
@@ -135,13 +140,17 @@ namespace BatailleNavale
         /// <param name="joueur">Joueur dont c'est le tour de jouer</param>
         public static void Jouer(int joueur)
         {
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("==TOUR DU JOUEUR "+joueur+"=============");
+            Console.ResetColor();
             // A faire évoluer si de deux joueurs 
             if (joueur == 1)
                 Joueur.JouerHumain(joueur);
             else
                 Joueur.JouerIA(joueur);
+            Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine("==FIN DU TOUR DU JOUEUR "+joueur+ "=============");
+            Console.ResetColor();
         }
 
         /// <summary>
@@ -181,7 +190,9 @@ namespace BatailleNavale
             for (int i = 0; i < salves.GetLength(0); i++)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("==TOUR DU JOUEUR " + joueur + "=============");
+                Console.ResetColor();
                 string infoGrilles = "Votre Grille:                          Ce que vous savez de la grille de votre adversaire:";
                 Console.WriteLine(infoGrilles);
                 Grille.AfficherDeuxGrillesCoteACote(Grille.ObtenirGrilleJoueur(joueur), Grille.ObtenirGrilleDecouverteJoueur(joueur));
@@ -203,16 +214,24 @@ namespace BatailleNavale
                 if (Bateau.Tirer(joueur, x, y, out coule) == true) // le joueur a touché
                 {
                     if (coule == false)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Vous avez touché un navire !");
+                        Console.ResetColor();
+                    }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Un bateau a été coulé.");
+                        Console.ResetColor();
                         Joueur.ReglerTailleSalve(joueur, Joueur.ObtenirTailleSalve(joueur) - 1);
                     }
                 }
                 else // le joueur n'a pas touché 
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("C'est un coup dans l'eau...");
+                    Console.ResetColor();
                 }
             }
         }
@@ -242,6 +261,7 @@ namespace BatailleNavale
                 if (Bateau.Tirer(joueur, x, y, out coule) == true) // IA a touché
                 {
                     IA.SignalerTouche(i);
+                    Console.ForegroundColor = ConsoleColor.Red;
                     if (coule)
                     {
                         Console.WriteLine("L'ordinateur a coulé un navire !");
@@ -250,13 +270,17 @@ namespace BatailleNavale
                     }
                     else
                         Console.WriteLine("L'ordinateur a touché un navire !");
+                    Console.ResetColor();
                 }
                 else // IA n'a pas touché 
                 {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     IA.SignalerRate(i);
                     Console.WriteLine("C'est un coup dans l'eau...");
                     decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
                     decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;
+                    Console.ResetColor();
+
                 }
             }
         }

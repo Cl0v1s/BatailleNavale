@@ -119,13 +119,18 @@ namespace BatailleNavale
         public static bool DemandeEffacerAnciennePartie()
         {
             Console.Clear();
-            ConsoleKey reponse;
+            Console.WriteLine("======= Sauvegarder une partie ===");
+            ConsoleKey reponse = default(ConsoleKey);
             do
             {
-                Console.WriteLine("======= Sauvegarder une partie ===");
-                Console.WriteLine("Il existe déjà une sauvegarde précédente, voulez-vous l'écraser pour sauvegarder la partie courante ? (O/N)");
+                if (reponse != default(ConsoleKey))
+                    Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Il existe déjà une sauvegarde précédente, voulez-vous l'écraser pour sauvegarder la partie courante ?");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("O)ui | N)on");
+                Console.ResetColor();
                 Console.WriteLine("(Si vous répondez (N), un nouveau fichier de sauvegarde sera créé)");
-                reponse = Console.ReadKey().Key;
+                reponse = Console.ReadKey(false).Key;
             }
             while (reponse != ConsoleKey.O && reponse != ConsoleKey.N);
             if (reponse == ConsoleKey.O)
@@ -161,7 +166,9 @@ namespace BatailleNavale
             File.WriteAllLines(Sauvegarde.NomFichier(), lignes);
             Console.Clear();
             Console.WriteLine("======= Sauvegarder une partie ===");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Votre partie a été sauvegardée dans le fichier "+Sauvegarde.NomFichier());
+            Console.ResetColor();
             Console.WriteLine("-- Appuyez sur une touche pour continuer --");
             Console.ReadKey(false);
         }

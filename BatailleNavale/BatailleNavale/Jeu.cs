@@ -34,12 +34,16 @@ namespace BatailleNavale
             Console.Clear();
             Console.WriteLine("======= Bataille Navale =======");
             Console.WriteLine("Version 1.0 dévelopée par Hugo Le Tarnec et Clovis Portron");
-            ConsoleKey key;
+            ConsoleKey key = default(ConsoleKey);
             do
             {
+                if (key != default(ConsoleKey))
+                    Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Veuillez choisir une option ci-dessous");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("(N)ouvelle partie | (C)arger une partie sauvegardée | (Q)uitter");
-                key = Console.ReadKey().Key;
+                Console.ResetColor();
+                key = Console.ReadKey(false).Key;
             }
             while (key != ConsoleKey.N && key != ConsoleKey.C && key != ConsoleKey.Q);
             Program.ViderTampon();
@@ -58,11 +62,15 @@ namespace BatailleNavale
         {
             Console.Clear();
             Console.WriteLine("======= Nouvelle partie =======");
-            ConsoleKey key;
+            ConsoleKey key = default(ConsoleKey);
             do
             {
+                if (key != default(ConsoleKey))
+                    Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Veuillez choisir une option ci-dessous");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("(F) Commencer une partie contre l'ordinateur niveau Facile \n(N) Commencer une partie contre l'ordinateur niveau Normal \n(R)etour");
+                Console.ResetColor();
                 key = Console.ReadKey().Key;
             }
             while (key != ConsoleKey.F && key != ConsoleKey.N && key != ConsoleKey.R);
@@ -99,10 +107,12 @@ namespace BatailleNavale
                 return;
             }
             Console.WriteLine("Veuillez sélectionner une sauvegarde ci-dessous");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             for (int i = 0; i < sauvegardes.Length; i++)
             {
-                Console.WriteLine("(" + (i + 1) + ")" + sauvegardes[i]);
+                Console.WriteLine("" + (i + 1) + ")" + sauvegardes[i]);
             }
+            Console.ResetColor();
             int index = -1;
             do
             {
@@ -119,7 +129,9 @@ namespace BatailleNavale
                 }
                 if(index == -1)
                 {
+                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Ce n'est pas une sélection valide. Veuillez réessayer.");
+                    Console.ResetColor();
                 }
             }
             while (index == -1);
@@ -134,12 +146,16 @@ namespace BatailleNavale
             }
             catch(Exception e)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Impossible de charger la partie. Etes-vous sûr d'avoir un fichier de sauvegarde existant ?");
+                Console.ResetColor();
                 Console.WriteLine("Appuyez sur une touche pour continuer...");
                 Console.ReadKey(false);
                 Jeu.MenuPrincipal();
             }
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("La partie a été chargée !");
+            Console.ResetColor();
             Console.WriteLine("Appuyez sur une touche pour continuer...");
             Console.ReadKey(false);
             Jeu.DeroulementPartie();
@@ -177,12 +193,16 @@ namespace BatailleNavale
             Console.WriteLine("======= Nouvelle partie =======");
             Grille.AfficherGrille(Grille.GrilleJ1);
             Console.WriteLine("-------------------------------");
-            Console.WriteLine("Etes-vous satisfait de ce placement ?");
-            Console.WriteLine("(O)ui | N(on)");
-            ConsoleKey key;
+            ConsoleKey key = default(ConsoleKey);
             do
             {
-                key = Console.ReadKey().Key;
+                if (key != default(ConsoleKey))
+                    Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Etes-vous satisfait de ce placement ?");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("(O)ui | N(on)");
+                Console.ResetColor();
+                key = Console.ReadKey(false).Key;
             }
             while (key != ConsoleKey.O && key != ConsoleKey.N);
             Program.ViderTampon();
@@ -206,7 +226,9 @@ namespace BatailleNavale
                 Joueur.Jouer(joueur);
                 if (Joueur.aPerdu(Joueur.ObtenirAutreJoueur(joueur)) == true)
                 {
-                    Console.WriteLine("Le joueur " + joueur + " a gagné");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Le joueur " + joueur + " a gagné !!!");
+                    Console.ResetColor();
                     Quitter();
                 }
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
@@ -216,7 +238,9 @@ namespace BatailleNavale
                 Joueur.Jouer(joueur);
                 if (Joueur.aPerdu(Joueur.ObtenirAutreJoueur(joueur)) == true)
                 {
-                    Console.WriteLine("Le joueur " + joueur + " a gagné");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Le joueur " + joueur + " a gagné :'(");
+                    Console.ResetColor();
                     Quitter();
                 }
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
