@@ -102,11 +102,40 @@ namespace BatailleNavale
 
             for(int i = 0; i < g1.Length && i < g2.Length; i++)
             {
-                Console.Write(g1[i] + "    " + g2[i]);
+                string ligne = g1[i] + "    " + g2[i];
+                Grille.AfficherLigneCouleur(ligne);
                 if (i < g1.Length - 1 && i < g2.Length)
                     Console.Write("\n");
             }
 
+        }
+
+        public static void AfficherLigneCouleur(string ligne)
+        {
+            if (ligne.Length <= 0)
+                return;
+            Console.Write(ligne[0]);
+            for(int i = 1; i < ligne.Length;i++)
+            {
+                string cellule = ligne[i - 1] +""+ ligne[i];
+                switch(cellule)
+                {
+                    case "|B":
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        break;
+                    case "|X":
+                        Console.ForegroundColor = ConsoleColor.White;
+                        break;
+                    case "|O":
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        break;
+                    case "|0":
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        break;
+                }
+                Console.Write(ligne[i]);
+                Console.ResetColor();
+            }
         }
 
         /// <summary>
@@ -115,7 +144,12 @@ namespace BatailleNavale
         /// <param name="grille">Grille à afficher</param>
         public static void AfficherGrille(int[,] grille)
         {
-            Console.Write(Grille.ConvertirGrilleVersTexte(grille));
+            string[] lignes = Grille.ConvertirGrilleVersTexte(grille).Split("\n".ToCharArray());
+            for(int i = 0; i < lignes.Length; i++)
+            {
+                Grille.AfficherLigneCouleur(lignes[i]);
+                Console.WriteLine("");
+            }
         }
 
        /// <summary>

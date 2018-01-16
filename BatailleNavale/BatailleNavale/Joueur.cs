@@ -223,13 +223,13 @@ namespace BatailleNavale
                 {
                     if (coule == false)
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Vous avez touché un navire !");
                         Console.ResetColor();
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("Un bateau a été coulé.");
                         Console.ResetColor();
                         Joueur.ReglerTailleSalve(joueur, Joueur.ObtenirTailleSalve(joueur) - 1);
@@ -237,9 +237,7 @@ namespace BatailleNavale
                 }
                 else // le joueur n'a pas touché 
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("C'est un coup dans l'eau...");
-                    Console.ResetColor();
                 }
             }
         }
@@ -282,12 +280,10 @@ namespace BatailleNavale
                 }
                 else // IA n'a pas touché 
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
                     IA.SignalerRate(i);
                     Console.WriteLine("C'est un coup dans l'eau...");
                     decouverte = Grille.ObtenirGrilleDecouverteJoueur(joueur);
                     decouverte[x, y] = (int)Grille.Cases.DECOUVERT_VIDE;
-                    Console.ResetColor();
 
                 }
             }

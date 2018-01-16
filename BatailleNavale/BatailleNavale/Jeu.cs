@@ -171,6 +171,8 @@ namespace BatailleNavale
             
             Console.Clear();
             Joueur.Start();
+            // On met à jour l'index de sauvegarde pour éviter d'écraser une ancienne partie
+            Sauvegarde.NomFichierIndex = Sauvegarde.RecupererDernierIndexSauvegarde() + 1;
 
 
             // Initialisation des grilles
