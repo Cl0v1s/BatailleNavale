@@ -110,6 +110,11 @@ namespace BatailleNavale
 
         }
 
+        /// <summary>
+        /// Affiche une ligne d'une grille en gérant les couleurs des éléments qui y figurent 
+        /// Appelé dans le cadre d'une grille, ralenti le programme mais améliore la lisibilité
+        /// </summary>
+        /// <param name="ligne">chaine de caractères représentant une ligne d'une grille</param>
         public static void AfficherLigneCouleur(string ligne)
         {
             if (ligne.Length <= 0)

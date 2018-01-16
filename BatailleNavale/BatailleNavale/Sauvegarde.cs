@@ -163,6 +163,8 @@ namespace BatailleNavale
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Grille.ObtenirGrilleJoueur(2));
             // Sauvegarde grille decouverte J2
             lignes = Sauvegarde.ConvertirObjetEnLigne(lignes, Grille.ObtenirGrilleDecouverteJoueur(2));
+            // Sauvegarde niveau
+            lignes = lignes.Concat(new string[] { ((int)Jeu.NiveauJeu).ToString() }).ToArray();
             File.WriteAllLines(Sauvegarde.NomFichier(), lignes);
             Console.Clear();
             Console.WriteLine("======= Sauvegarder une partie ===");
@@ -235,7 +237,9 @@ namespace BatailleNavale
                     Grille.GrilleDecouverteJ2[i, u] = data[u];
             }
             index += Grille.GrilleDecouverteJ2.GetLength(0);
-
+            // Chargement du niveau de difficulté
+            Jeu.NiveauJeu = (Jeu.Niveau)Convert.ToInt32(lignes[index]);
+            index++;
             // Gestion du nombre de tirs par salves 
             for(int i = 0; i < Bateau.NombreTypesBateaux; i++)
             {
