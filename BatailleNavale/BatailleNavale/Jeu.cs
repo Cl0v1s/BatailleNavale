@@ -9,15 +9,23 @@ namespace BatailleNavale
 {
     class Jeu
     {
+        /// <summary>
+        /// ENumération des différents niveaux de difficulté disponibles
+        /// </summary>
         public enum Niveau
         {
             FACILE = 1, 
             NORMAL = 2
         };
 
+        /// <summary>
+        /// Niveau de jeu actuel (Facile par défaut)
+        /// </summary>
         public static Niveau NiveauJeu = Niveau.FACILE;
 
-
+        /// <summary>
+        /// Affichage et gestion de l'interaction du joueur du menu principal
+        /// </summary>
         public static void MenuPrincipal()
         {
             Console.Clear();
@@ -35,11 +43,14 @@ namespace BatailleNavale
             if (key == ConsoleKey.N)
                 Jeu.MenuNouvellePartie();
             else if (key == ConsoleKey.C)
-                Jeu.ChargerPartie();
+                Jeu.MenuChargerPartie();
             else if (key == ConsoleKey.Q)
                 Jeu.Quitter();
         }
 
+        /// <summary>
+        /// Affichage et gestion de l'interaction du joueur du menu de lancement d'une nouvelle partie
+        /// </summary>
         public static void MenuNouvellePartie()
         {
             Console.Clear();
@@ -58,16 +69,19 @@ namespace BatailleNavale
             else if(key == ConsoleKey.F)
             {
                 Jeu.NiveauJeu = Niveau.FACILE;
-                Jeu.DemarrerNouvellePartie();
+                Jeu.MenuDemarrerNouvellePartie();
             }
             else if(key == ConsoleKey.N)
             {
                 Jeu.NiveauJeu = Niveau.NORMAL;
-                Jeu.DemarrerNouvellePartie();
+                Jeu.MenuDemarrerNouvellePartie();
             }
         }
 
-        public static void ChargerPartie()
+        /// <summary>
+        /// Affichage et gestion de l'interaction du joueur du menu de chargement d'une partie sauvegardée
+        /// </summary>
+        public static void MenuChargerPartie()
         {
             Console.Clear();
             Joueur.Start();
@@ -128,7 +142,11 @@ namespace BatailleNavale
             Jeu.DeroulementPartie();
         }
 
-        public static void DemarrerNouvellePartie()
+
+        /// <summary>
+        /// Affiche et gère l'écran de paramétrage d'une nouvelle partie
+        /// </summary>
+        public static void MenuDemarrerNouvellePartie()
         {
             
             Console.Clear();
@@ -168,10 +186,13 @@ namespace BatailleNavale
             if (key == ConsoleKey.O)
                 Jeu.DeroulementPartie();
             else
-                Jeu.DemarrerNouvellePartie();
+                Jeu.MenuDemarrerNouvellePartie();
 
         }
 
+        /// <summary>
+        /// Affiche et gère le déroulement d'une partie 
+        /// </summary>
         public static void DeroulementPartie()
         {
             int joueur = 1;
@@ -180,22 +201,22 @@ namespace BatailleNavale
             {
                 Console.Clear();
                 Joueur.Jouer(joueur);
-                if (Bateau.calculVie(Joueur.ObtenirAutreJoueur(joueur)) == true)
+                if (Joueur.aPerdu(Joueur.ObtenirAutreJoueur(joueur)) == true)
                 {
+                    Console.WriteLine("Le joueur " + joueur + " a gagné");
                     Quitter();
                 }
                 joueur = Joueur.ObtenirAutreJoueur(joueur);
-
-
                 Console.WriteLine("-- Appuyez sur une touche pour passer au tour de l'autre joueur --");
                 Console.ReadKey(false);
                 Console.Clear();
                 Joueur.Jouer(joueur);
-                if (Bateau.calculVie(1) == true)
+                if (Joueur.aPerdu(Joueur.ObtenirAutreJoueur(joueur)) == true)
                 {
+                    Console.WriteLine("Le joueur " + joueur + " a gagné");
                     Quitter();
                 }
-                joueur = Joueur.ObtenirAutreJoueur(Joueur.ObtenirAutreJoueur(joueur));
+                joueur = Joueur.ObtenirAutreJoueur(joueur);
                 if (Joueur.DemanderContinuer() == false)
                 {
                     Sauvegarde.Sauvegarder();
@@ -204,6 +225,9 @@ namespace BatailleNavale
             }
         }
 
+        /// <summary>
+        /// Affiche et gère le menu permettant de quitter le jeu
+        /// </summary>
         public static void Quitter()
         {
             Console.WriteLine("Au revoir !");

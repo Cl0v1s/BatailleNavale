@@ -122,6 +122,23 @@ namespace BatailleNavale
             Console.WriteLine("==FIN DU TOUR DU JOUEUR "+joueur+ "=============");
         }
 
+        public static bool aPerdu(int joueur)
+        {
+            int vieRestante = 0;
+            for (int i = 0; i < Bateau.NombreTypesBateaux; i++)
+            {
+                vieRestante += Bateau.ObtenirVieBateauxJoueur(joueur)[i];
+            }
+            if (vieRestante == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
