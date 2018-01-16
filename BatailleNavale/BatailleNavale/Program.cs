@@ -10,7 +10,7 @@ namespace BatailleNavale
     {
         public static Random random = new Random();
 
-        public static void ClearInputBuffer()
+        public static void ViderTampon()
         {
             while (Console.KeyAvailable)
             {

@@ -7,6 +7,9 @@ using System.Threading;
 
 namespace BatailleNavale
 {
+    /// <summary>
+    /// Classe statique permettant de réaliser des actions en rapport au déroulement du jeu dans son ensemble
+    /// </summary>
     class Jeu
     {
         /// <summary>
@@ -39,7 +42,7 @@ namespace BatailleNavale
                 key = Console.ReadKey().Key;
             }
             while (key != ConsoleKey.N && key != ConsoleKey.C && key != ConsoleKey.Q);
-            Program.ClearInputBuffer();
+            Program.ViderTampon();
             if (key == ConsoleKey.N)
                 Jeu.MenuNouvellePartie();
             else if (key == ConsoleKey.C)
@@ -63,7 +66,7 @@ namespace BatailleNavale
                 key = Console.ReadKey().Key;
             }
             while (key != ConsoleKey.F && key != ConsoleKey.N && key != ConsoleKey.R);
-            Program.ClearInputBuffer();
+            Program.ViderTampon();
             if (key == ConsoleKey.R)
                 Jeu.MenuPrincipal();
             else if(key == ConsoleKey.F)
@@ -182,7 +185,7 @@ namespace BatailleNavale
                 key = Console.ReadKey().Key;
             }
             while (key != ConsoleKey.O && key != ConsoleKey.N);
-            Program.ClearInputBuffer();
+            Program.ViderTampon();
             if (key == ConsoleKey.O)
                 Jeu.DeroulementPartie();
             else

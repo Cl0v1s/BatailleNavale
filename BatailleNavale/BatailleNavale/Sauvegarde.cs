@@ -8,12 +8,19 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
+    /// <summary>
+    /// Classe statique permettant de réaliser des opérations de sauvegarde
+    /// </summary>
     class Sauvegarde
     {
         public static string NomFichierPrefix = "Sauvegarde";
         public static string NomFichierSufix = ".txt";
         public static int NomFichierIndex = 1;
 
+        /// <summary>
+        /// Retourne le nom du fichier actuel de sauvegarde
+        /// </summary>
+        /// <returns>Nom du fichier de sauvegarde</returns>
         public static string NomFichier()
         {
             return NomFichierPrefix + " " + NomFichierIndex + NomFichierSufix;
@@ -73,17 +80,29 @@ namespace BatailleNavale
             return resultat;
         }
 
+        /// <summary>
+        /// Permet de changer le nom du fichier de sauvegarde
+        /// </summary>
+        /// <param name="nom">Nom de fichier de sauvegarde souhaité</param>
         public static void ReglerFichierSauvegarde(string nom)
         {
             string last = nom.Replace(Sauvegarde.NomFichierPrefix, "").Replace(Sauvegarde.NomFichierSufix, "").Replace(".", "").Replace("\\", "");
             Sauvegarde.NomFichierIndex = Convert.ToInt32(last);
         }
 
+        /// <summary>
+        /// Retourne les fichiers de sauvegarde existants
+        /// </summary>
+        /// <returns>Tableau contenant les noms de différents fichiers de sauvegarde</returns>
         public static string[] RecupererFichiersSauvegarde()
         {
             return Directory.GetFiles(".", Sauvegarde.NomFichierPrefix + "*");
         }
 
+        /// <summary>
+        /// Recupère l'index du dernier fichier de sauvegarde
+        /// </summary>
+        /// <returns>L'index du dernier fichier de sauvegarde</returns>
         public static int RecupererDernierIndexSauvegarde()
         {
             string[] files = Directory.GetFiles(".", Sauvegarde.NomFichierPrefix+"*");
@@ -93,6 +112,10 @@ namespace BatailleNavale
             return Convert.ToInt32(last);
         }
 
+        /// <summary>
+        /// Demande à l'utilisateur si il souhaite écraser une partie existante. Si il répond non, un nouveau fichier de sauvegarde sera créé
+        /// </summary>
+        /// <returns>Vrai si il souhaite écraser, faux sinon</returns>
         public static bool DemandeEffacerAnciennePartie()
         {
             Console.Clear();

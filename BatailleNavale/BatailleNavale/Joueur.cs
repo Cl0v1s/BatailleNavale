@@ -6,18 +6,35 @@ using System.Threading.Tasks;
 
 namespace BatailleNavale
 {
+    /// <summary>
+    /// Classe statique permettant de réaliser des actions relatives aux joueurs
+    /// </summary>
     class Joueur
     {
-
+        /// <summary>
+        /// Nombre de tirs alloués au joueur 1
+        /// </summary>
         public static int TailleSalveJ1 = Bateau.NombreTypesBateaux;
+
+        /// <summary>
+        /// Nombre de tirs alloués au joueur 2
+        /// </summary>
         public static int TailleSalveJ2 = Bateau.NombreTypesBateaux;
 
+        /// <summary>
+        /// Initialise les données des joueurs
+        /// </summary>
         public static void Start()
         {
             Joueur.TailleSalveJ1 = Bateau.NombreTypesBateaux;
             Joueur.TailleSalveJ2 = Bateau.NombreTypesBateaux;
-    }
+        }
 
+        /// <summary>
+        /// Retourne la taille de la salve du joueur passé en paramètre
+        /// </summary>
+        /// <param name="joueur">Joueur concerné</param>
+        /// <returns>La taille de la salve du joueur</returns>
         public static int ObtenirTailleSalve(int joueur)
         {
             if (joueur == 1)
@@ -27,6 +44,11 @@ namespace BatailleNavale
             throw new Exception("L'index de joueur ne peut être que 1 ou 2.");
         }
 
+        /// <summary>
+        /// Permet de régler la taille de la savle du joueur passé en paramètre
+        /// </summary>
+        /// <param name="joueur">Joueur concerné</param>
+        /// <param name="valeur">Nouvelle taille de salve</param>
         public static void ReglerTailleSalve(int joueur, int valeur)
         {
             if (joueur == 1)
@@ -122,6 +144,11 @@ namespace BatailleNavale
             Console.WriteLine("==FIN DU TOUR DU JOUEUR "+joueur+ "=============");
         }
 
+        /// <summary>
+        /// Estime si le joueur passé en paramètre a perdu
+        /// </summary>
+        /// <param name="joueur">Joueur concerné</param>
+        /// <returns>vrai si le joueur a perdu, faux sinon</returns>
         public static bool aPerdu(int joueur)
         {
             int vieRestante = 0;
@@ -140,9 +167,9 @@ namespace BatailleNavale
         }
 
         /// <summary>
-        /// 
+        /// Permet de joueur un tour en tant qu'humain
         /// </summary>
-        /// <param name="joueur"></param>
+        /// <param name="joueur">Joueur concerné</param>
         public static void JouerHumain(int joueur)
         {
             int x, y;
@@ -190,6 +217,10 @@ namespace BatailleNavale
             }
         }
 
+        /// <summary>
+        /// Permet de jouer un tour en tant qu'IA
+        /// </summary>
+        /// <param name="joueur">Joueur concerné</param>
         public static void JouerIA(int joueur)
         {
             int x, y;
